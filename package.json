@@ -2,9 +2,12 @@
   "name": "organizeit",
   "version": "1.0.0",
   "description": "Organize your files and folders in just 5 seconds",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "organizeit": "index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +22,7 @@
     "npm",
     "manraj",
     "singh",
-    "manraj",
+    "manrajsingh",
     "grover",
     "organize",
     "files"
