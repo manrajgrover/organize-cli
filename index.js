@@ -1,4 +1,4 @@
-var fs = require('fs'), path = require('path');
+var fs = require('fs'), mv = require('mv');
 
 var getExtension = function (filename) {
 	var i = filename.lastIndexOf('.');
@@ -38,13 +38,13 @@ for (var i = 0; i < fileNames.length; i++) {
 	var fileExtension = getExtension(fileNames[i]).toUpperCase();
 	for (var type in formats) {
 		if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-			var path = __dirname + '/' + type;
+			var path = __dirname + '/Organized_' + type;
 			mkdir(path);
-			/*mv(__dirname+'/'+fileNames[i],path+'/'+fileNames[i],function(err){
-			if(err){
-			console.log("Couldn't move "+fileNames[i]+" because of following error: "+ err);
-			}
-			});*/
+			mv(__dirname + '/' + fileNames[i], path + '/' + fileNames[i], function (err) {
+				if (err) {
+					console.log("Couldn't move " + fileNames[i] + " because of following error: " + err);
+				}
+			});
 		}
 	}
 	console.log(fileExtension);
