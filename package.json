@@ -37,5 +37,9 @@
   "bugs": {
     "url": "https://github.com/ManrajGrover/organizeit/issues"
   },
-  "homepage": "https://github.com/ManrajGrover/organizeit#readme"
+  "homepage": "https://github.com/ManrajGrover/organizeit#readme",
+  "devDependencies": {
+    "fs": "0.0.2",
+    "mv": "^2.1.1"
+  }
 }
