@@ -1,17 +1,16 @@
 {
   "name": "organizeit",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Organize your files and folders in just 5 seconds",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "preferGlobal": true,
   "bin": {
-    "organizeit": "index.js"
+    "organizeit": "./app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ManrajGrover/organizeiT.git"
+    "url": "git+https://github.com/ManrajGrover/organizeit.git"
   },
   "keywords": [
     "organize",
@@ -27,10 +26,16 @@
     "organize",
     "files"
   ],
+  "maintainers": [
+    {
+      "name": "ManrajGrover",
+      "email": "manrajsinghgrover@gmail.com"
+    }
+  ],
   "author": "Manraj Singh <https://github.com/ManrajGrover>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ManrajGrover/organizeiT/issues"
+    "url": "https://github.com/ManrajGrover/organizeit/issues"
   },
-  "homepage": "https://github.com/ManrajGrover/organizeiT#readme"
+  "homepage": "https://github.com/ManrajGrover/organizeit#readme"
 }
