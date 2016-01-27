@@ -5,6 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "preferGlobal": true,
   "bin": {
     "organizeit": "./app.js"
   },
@@ -38,8 +42,9 @@
     "url": "https://github.com/ManrajGrover/organizeit/issues"
   },
   "homepage": "https://github.com/ManrajGrover/organizeit#readme",
-  "devDependencies": {
+  "dependencies": {
     "fs": "0.0.2",
     "mv": "^2.1.1"
-  }
+  },
+  "devDependencies": {}
 }
