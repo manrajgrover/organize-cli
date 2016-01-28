@@ -2,9 +2,9 @@
 
 var fs = require('fs'), mv = require('mv');
 
-var getExtension = function (filename) {
-	var i = filename.lastIndexOf('.');
-	return (i < 0) ? '' : filename.substr(i + 1);
+var getExtension = function (fileName) {
+	var i = fileName.lastIndexOf('.');
+	return (i < 0) ? '' : fileName.substr(i + 1);
 }
 
 var mkdir = function (path) {
@@ -15,6 +15,19 @@ var mkdir = function (path) {
 			throw e;
 		}
 	}
+}
+
+var organizeiT = function (fileName, type) {
+	var path = process.cwd() + '/Organized_' + type;
+    console.log(path);
+	mkdir(path);
+    console.log(fileName);
+    console.log(type);
+	mv(process.cwd() + '/' + fileName, path + '/' + fileName, function (err) {
+		if (err) {
+			console.log("Couldn't move " + fileName + " because of following error: " + err);
+		}
+	});
 }
 
 var audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
@@ -34,20 +47,16 @@ var formats = {
 	"System Files" : sys_files,
 	"Video" : video
 };
-var fileNames = fs.readdirSync(__dirname);
+
+var fileNames = fs.readdirSync(process.cwd());
 
 for (var i = 0; i < fileNames.length; i++) {
 	var fileExtension = getExtension(fileNames[i]).toUpperCase();
 	for (var type in formats) {
 		if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-			var path = __dirname + '/Organized_' + type;
-			mkdir(path);
-			mv(__dirname + '/' + fileNames[i], path + '/' + fileNames[i], function (err) {
-				if (err) {
-					console.log("Couldn't move " + fileNames[i] + " because of following error: " + err);
-				}
-			});
+			organizeiT(fileNames[i], type);
 		}
 	}
-	console.log(fileExtension);
 }
+
+console.log('I know it took a long time, but finally things are sorted!');
