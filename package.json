@@ -5,13 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "organizeit": "./app.js"
+  },
   "engines": {
     "node": ">=0.10"
   },
   "preferGlobal": true,
-  "bin": {
-    "organizeit": "./app.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ManrajGrover/organizeit.git"
