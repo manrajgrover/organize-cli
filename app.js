@@ -19,10 +19,7 @@ var mkdir = function (path) {
 
 var organizeiT = function (fileName, type) {
 	var path = process.cwd() + '/Organized_' + type;
-    console.log(path);
 	mkdir(path);
-    console.log(fileName);
-    console.log(type);
 	mv(process.cwd() + '/' + fileName, path + '/' + fileName, function (err) {
 		if (err) {
 			console.log("Couldn't move " + fileName + " because of following error: " + err);
