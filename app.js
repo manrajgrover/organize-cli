@@ -10,9 +10,9 @@ var getExtension = function (fileName) {
 var mkdir = function (path) {
 	try {
 		fs.mkdirSync(path);
-	} catch (e) {
-		if (e.code != 'EEXIST') {
-			throw e;
+	} catch (err) {
+		if (err.code != 'EEXIST') {
+			throw new Error("Error occurred while creating a new directory");
 		}
 	}
 }
@@ -22,7 +22,7 @@ var organizeiT = function (fileName, type) {
 	mkdir(path);
 	mv(process.cwd() + '/' + fileName, path + '/' + fileName, function (err) {
 		if (err) {
-			console.log("Couldn't move " + fileName + " because of following error: " + err);
+			throw new Error("Couldn't move " + fileName + " because of following error: " + err);
 		}
 	});
 }
@@ -45,15 +45,22 @@ var formats = {
 	"Video" : video
 };
 
+console.log('Scanning files..');
+
 var fileNames = fs.readdirSync(process.cwd());
 
-for (var i = 0; i < fileNames.length; i++) {
-	var fileExtension = getExtension(fileNames[i]).toUpperCase();
-	for (var type in formats) {
-		if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-			organizeiT(fileNames[i], type);
+try {
+	for (var i = 0; i < fileNames.length; i++) {
+		var fileExtension = getExtension(fileNames[i]).toUpperCase();
+		for (var type in formats) {
+			if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
+				organizeiT(fileNames[i], type);
+			}
 		}
 	}
+} catch (err) {
+	console.log(err);
+	process.exit();
 }
 
-console.log('I know it took a long time, but finally things are sorted!');
+console.log('Done!');
