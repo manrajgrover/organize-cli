@@ -13,6 +13,46 @@ $ npm install organizeit
 2. Run the package using `organizeit` command.
 3. That's it! Spend your time doing something useful now.
 
+## Example
+
+###Before:
+```
+Downloads
+│   ├── Project.docx
+│   ├── Resume.pdf
+│   ├── Seven Lions - Worlds Apart.mp3
+│   ├── Daft Punk - Get Lucky.mp3
+│   ├── Report.pdf
+│   ├── Profile Picture.png
+│   ├── Some Random Library.zip
+│   ├── Cats.jpg
+│   ├── Install me.exe
+```
+
+###After:
+```
+Downloads
+│   ├── Organized_Music
+│   │   └── Daft Punk - Get Lucky.mp3
+│   │   ├── Seven Lions - Worlds Apart.mp3
+|	|
+│   ├── Organized_Documents
+│   │   └── Project.docx
+│   │   └── Report.pdf
+│   │   ├── Resume.pdf
+|	|
+│   ├── Organized_Compressed
+│   │   └── Some Random Library.zip
+│   │   └── archive.7z
+|	|
+│   ├── Organized_System Files
+│   │   └── Install me.exe
+|	|
+│   ├── Organized_Images
+│   │   └── Profile Picture.png
+│   │   └── Cats.jpg
+```
+
 ## Contributing
 
 1. Fork it!
