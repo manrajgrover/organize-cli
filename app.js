@@ -64,3 +64,4 @@ try {
 }
 
 console.log('Done!');
+process.exit();
