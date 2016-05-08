@@ -1,4 +1,4 @@
-# organizeiT
+# organizeit
 Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
 
 ## Installation
