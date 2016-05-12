@@ -1,4 +1,6 @@
 # organizeit
+[![npm](https://img.shields.io/npm/dt/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit)
+
 Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
 
 ## Installation
