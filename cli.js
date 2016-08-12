@@ -4,7 +4,6 @@
 
 const yargs = require('yargs');
 const fs = require('fs');
-const ora = require('ora');
 const chalk = require('chalk');
 const path = require('path');
 const mv = require('mv');
