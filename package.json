@@ -43,8 +43,11 @@
   },
   "homepage": "https://github.com/ManrajGrover/organizeit#readme",
   "dependencies": {
+    "chalk": "^1.1.3",
     "fs": "0.0.2",
-    "mv": "^2.1.1"
+    "mv": "^2.1.1",
+    "ora": "^0.3.0",
+    "yargs": "^4.8.1"
   },
   "devDependencies": {}
 }
