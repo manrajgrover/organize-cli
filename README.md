@@ -34,23 +34,23 @@ Downloads
 ###After:
 ```
 Downloads
-│   ├── Organized_Music
+│   ├── Organize_Music
 │   │   └── Daft Punk - Get Lucky.mp3
 │   │   ├── Seven Lions - Worlds Apart.mp3
 |	|
-│   ├── Organized_Documents
+│   ├── Organize_Documents
 │   │   └── Project.docx
 │   │   └── Report.pdf
 │   │   ├── Resume.pdf
 |	|
-│   ├── Organized_Compressed
+│   ├── Organize_Compressed
 │   │   └── Some Random Library.zip
 │   │   └── archive.7z
 |	|
-│   ├── Organized_System Files
+│   ├── Organize_System Files
 │   │   └── Install me.exe
 |	|
-│   ├── Organized_Images
+│   ├── Organize_Images
 │   │   └── Profile Picture.png
 │   │   └── Cats.jpg
 ```
