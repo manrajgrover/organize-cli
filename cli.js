@@ -56,7 +56,7 @@ const argv = yargs
   .usage('organize <command>')
   .command('it', 'Organizes current directory', (yargs) => {
     let fileNames = fs.readdirSync(process.cwd());
-    const spinner = ora('Scanning').start();
+    console.log(chalk.green('Scanning'));
     for (let i = 0; i < fileNames.length; i++) {
       let fileExtension = getExtension(fileNames[i]).toUpperCase();
       for (let type in formats) {
@@ -65,7 +65,7 @@ const argv = yargs
         }
       }
     }
-    spinner.stop('Done!');
+    console.log(chalk.green('Done!'));
   })
   .help('h')
   .alias('h', 'help')
