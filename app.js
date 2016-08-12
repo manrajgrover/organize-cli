@@ -1,6 +1,12 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
-const fs = require('fs'), mv = require('mv');
+const yargs = require('yargs');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const ora = require('ora');
+const chalk = require('chalk');
+const path = require('path');
+const mv = require('mv');
 
 const getExtension = function (fileName) {
 	let i = fileName.lastIndexOf('.');
