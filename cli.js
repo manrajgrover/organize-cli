@@ -23,10 +23,10 @@ const mkdir = function (path) {
 	}
 }
 
-const organizeiT = function (fileName, type) {
-	let path = process.cwd() + '/Organized_' + type;
-	mkdir(path);
-	mv(process.cwd() + '/' + fileName, path + '/' + fileName, function (err) {
+const organizeiT = function (directory, fileName, type) {
+  let dir = path.resolve(directory, 'Organized_' + type);
+	mkdir(dir);
+	mv(path.resolve(process.cwd(), fileName), path.resolve(dir, fileName), function (err) {
 		if (err) {
 			throw new Error("Couldn't move " + fileName + " because of following error: " + err);
 		}
@@ -60,7 +60,7 @@ try {
 		let fileExtension = getExtension(fileNames[i]).toUpperCase();
 		for (let type in formats) {
 			if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-				organizeiT(fileNames[i], type);
+				organizeiT(process.cwd(), fileNames[i], type);
 			}
 		}
 	}
@@ -70,3 +70,13 @@ try {
 	console.log(err);
 	process.exit();
 }
+
+
+const argv = yargs
+  .usage('organize <command>')
+  .command('it', 'Organizes current directory', (yargs) => {
+    
+  })
+  .help('h')
+  .alias('h', 'help')
+  .argv;
