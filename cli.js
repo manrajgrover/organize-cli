@@ -8,12 +8,12 @@ const chalk = require('chalk');
 const path = require('path');
 const mv = require('mv');
 
-const getExtension = function (fileName) {
+const getExtension = (fileName) => {
 	let i = fileName.lastIndexOf('.');
 	return (i < 0) ? '' : fileName.substr(i + 1);
 }
 
-const mkdir = function (path) {
+const mkdir = (path) => {
 	try {
 		fs.mkdirSync(path);
 	} catch (err) {
@@ -23,7 +23,7 @@ const mkdir = function (path) {
 	}
 }
 
-const organizeiT = function (directory, fileName, type) {
+const organizeiT = (directory, fileName, type) => {
   let dir = path.resolve(directory, 'Organized_' + type);
 	mkdir(dir);
 	mv(path.resolve(process.cwd(), fileName), path.resolve(dir, fileName), function (err) {
