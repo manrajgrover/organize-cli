@@ -1,13 +1,13 @@
 #! /usr/bin/env node
 
-var fs = require('fs'), mv = require('mv');
+const fs = require('fs'), mv = require('mv');
 
-var getExtension = function (fileName) {
-	var i = fileName.lastIndexOf('.');
+const getExtension = function (fileName) {
+	let i = fileName.lastIndexOf('.');
 	return (i < 0) ? '' : fileName.substr(i + 1);
 }
 
-var mkdir = function (path) {
+const mkdir = function (path) {
 	try {
 		fs.mkdirSync(path);
 	} catch (err) {
@@ -17,8 +17,8 @@ var mkdir = function (path) {
 	}
 }
 
-var organizeiT = function (fileName, type) {
-	var path = process.cwd() + '/Organized_' + type;
+const organizeiT = function (fileName, type) {
+	let path = process.cwd() + '/Organized_' + type;
 	mkdir(path);
 	mv(process.cwd() + '/' + fileName, path + '/' + fileName, function (err) {
 		if (err) {
@@ -27,15 +27,15 @@ var organizeiT = function (fileName, type) {
 	});
 }
 
-var audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
-var code = ["CPP", "RB", "PY", "HTML", "CSS", "JS"];
-var compressed = ["RAR", "JAR", "ZIP", "TAR", "MAR", "ISO", "LZ", "7ZIP", "TGZ", "GZ", "BZ2"];
-var docs = ["DOC", "DOCX", "PPT", "PPTX", "PAGES", "PDF", "ODT", "ODP", "XLSX", "XLS", "ODS", "TXT", "IN", "OUT", "MD"];
-var images = ["JPG", "JPEG", "GIF", "PNG", "SVG"];
-var sys_files = ["DEB", "EXE", "SH", "BUNDLE"];
-var video = ["FLV", "WMV", "MOV", "MP4", "MPEG", "3GP", "MKV"];
+const audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
+const code = ["CPP", "RB", "PY", "HTML", "CSS", "JS"];
+const compressed = ["RAR", "JAR", "ZIP", "TAR", "MAR", "ISO", "LZ", "7ZIP", "TGZ", "GZ", "BZ2"];
+const docs = ["DOC", "DOCX", "PPT", "PPTX", "PAGES", "PDF", "ODT", "ODP", "XLSX", "XLS", "ODS", "TXT", "IN", "OUT", "MD"];
+const images = ["JPG", "JPEG", "GIF", "PNG", "SVG"];
+const sys_files = ["DEB", "EXE", "SH", "BUNDLE"];
+const video = ["FLV", "WMV", "MOV", "MP4", "MPEG", "3GP", "MKV"];
 
-var formats = {
+const formats = {
 	"Music" : audio,
 	"Codes" : code,
 	"Compressed" : compressed,
@@ -47,12 +47,12 @@ var formats = {
 
 console.log('Scanning files..');
 
-var fileNames = fs.readdirSync(process.cwd());
+let fileNames = fs.readdirSync(process.cwd());
 
 try {
-	for (var i = 0; i < fileNames.length; i++) {
-		var fileExtension = getExtension(fileNames[i]).toUpperCase();
-		for (var type in formats) {
+	for (let i = 0; i < fileNames.length; i++) {
+		let fileExtension = getExtension(fileNames[i]).toUpperCase();
+		for (let type in formats) {
 			if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
 				organizeiT(fileNames[i], type);
 			}
