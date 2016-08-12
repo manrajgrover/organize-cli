@@ -6,13 +6,13 @@ Organize files in your current directory, by classifying them into folders of mu
 ## Installation
 
 ```
-$ npm install organizeit
+$ npm install -g organizeit
 ```
 
 ## How to use?
 
 1. Change directory to the folder you want to organize files in.
-2. Run the package using `organizeit` command.
+2. Run the package using `organize it` command.
 3. That's it! Spend your time doing something useful now.
 
 ## Example
