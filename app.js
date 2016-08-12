@@ -58,10 +58,9 @@ try {
 			}
 		}
 	}
+	console.log('Done!');
+	process.exit();
 } catch (err) {
 	console.log(err);
 	process.exit();
 }
-
-console.log('Done!');
-process.exit();
