@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
+'use strict';
+
 const yargs = require('yargs');
-const inquirer = require('inquirer');
 const fs = require('fs');
 const ora = require('ora');
 const chalk = require('chalk');
@@ -24,7 +25,7 @@ const mkdir = (path) => {
 }
 
 const organizeiT = (directory, fileName, type) => {
-  let dir = path.resolve(directory, 'Organized_' + type);
+  let dir = path.resolve(directory, 'Organize_' + type);
 	mkdir(dir);
 	mv(path.resolve(process.cwd(), fileName), path.resolve(dir, fileName), function (err) {
 		if (err) {
@@ -51,31 +52,20 @@ const formats = {
 	"Video" : video
 };
 
-console.log('Scanning files..');
-
-let fileNames = fs.readdirSync(process.cwd());
-
-try {
-	for (let i = 0; i < fileNames.length; i++) {
-		let fileExtension = getExtension(fileNames[i]).toUpperCase();
-		for (let type in formats) {
-			if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-				organizeiT(process.cwd(), fileNames[i], type);
-			}
-		}
-	}
-	console.log('Done!');
-	process.exit();
-} catch (err) {
-	console.log(err);
-	process.exit();
-}
-
-
 const argv = yargs
   .usage('organize <command>')
   .command('it', 'Organizes current directory', (yargs) => {
-    
+    let fileNames = fs.readdirSync(process.cwd());
+    const spinner = ora('Scanning').start();
+    for (let i = 0; i < fileNames.length; i++) {
+      let fileExtension = getExtension(fileNames[i]).toUpperCase();
+      for (let type in formats) {
+        if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
+          organizeiT(process.cwd(), fileNames[i], type);
+        }
+      }
+    }
+    spinner.stop('Done!');
   })
   .help('h')
   .alias('h', 'help')
