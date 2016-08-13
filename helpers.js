@@ -2,17 +2,16 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:33:08
+* @Last Modified time: 2016-08-13 20:44:16
 */
 
 'use strict';
 
-module.exports.getExtension = (fileName) => {
-  let i = fileName.lastIndexOf('.');
-  return (i < 0) ? '' : fileName.substr(i + 1);
-}
+const mv = require('mv');
+const fs = require('fs');
+const path = require('path');
 
-module.exports.mkdir = (path) => {
+const mkdir = (path) => {
   try {
     fs.mkdirSync(path);
   } catch (err) {
@@ -20,6 +19,11 @@ module.exports.mkdir = (path) => {
       throw new Error("Error occurred while creating a new directory");
     }
   }
+}
+
+module.exports.getExtension = (fileName) => {
+  let i = fileName.lastIndexOf('.');
+  return (i < 0) ? '' : fileName.substr(i + 1);
 }
 
 module.exports.organizeiT = (directory, fileName, type) => {

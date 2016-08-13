@@ -3,13 +3,11 @@
 'use strict';
 
 const yargs = require('yargs');
-const fs = require('fs');
 const chalk = require('chalk');
-const path = require('path');
-const mv = require('mv');
+const fs = require('fs');
 const helpers = require('./helpers');
+
 const getExtension = helpers.getExtension,
-      mkdir = helpers.mkdir,
       organizeiT = helpers.organizeiT;
 
 const audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
