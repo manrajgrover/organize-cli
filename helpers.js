@@ -2,7 +2,7 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:52:01
+* @Last Modified time: 2016-08-13 20:53:57
 */
 
 'use strict';
@@ -30,7 +30,7 @@ module.exports.getFileNames = (directory) => {
   return fs.readdirSync(directory);
 }
 
-module.exports.organizeiT = (directory, fileName, type) => {
+module.exports.organize = (directory, fileName, type) => {
   let dir = path.resolve(directory, 'Organize_' + type);
   mkdir(dir);
   mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {

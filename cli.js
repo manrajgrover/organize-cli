@@ -8,7 +8,7 @@ const helpers = require('./helpers');
 
 const getExtension = helpers.getExtension,
       getFileNames = helpers.getFileNames,
-      organizeiT = helpers.organizeiT;
+      organize = helpers.organize;
 
 const audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
 const code = ["CPP", "RB", "PY", "HTML", "CSS", "JS"];
@@ -37,7 +37,7 @@ const argv = yargs
       let fileExtension = getExtension(fileNames[i]).toUpperCase();
       for (let type in formats) {
         if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-          organizeiT(process.cwd(), fileNames[i], type);
+          organize(process.cwd(), fileNames[i], type);
         }
       }
     }
