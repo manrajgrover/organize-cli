@@ -2,7 +2,7 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:49:07
+* @Last Modified time: 2016-08-13 20:52:01
 */
 
 'use strict';
@@ -26,14 +26,14 @@ module.exports.getExtension = (fileName) => {
   return (i < 0) ? '' : fileName.substr(i + 1);
 }
 
-module.exports.getFileNames = (path) => {
-  return fs.readdirSync(path);
+module.exports.getFileNames = (directory) => {
+  return fs.readdirSync(directory);
 }
 
 module.exports.organizeiT = (directory, fileName, type) => {
   let dir = path.resolve(directory, 'Organize_' + type);
   mkdir(dir);
-  mv(path.resolve(process.cwd(), fileName), path.resolve(dir, fileName), function (err) {
+  mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {
     if (err) {
       throw new Error("Couldn't move " + fileName + " because of following error: " + err);
     }
