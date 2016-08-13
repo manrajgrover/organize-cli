@@ -7,31 +7,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
 const mv = require('mv');
-
-const getExtension = (fileName) => {
-	let i = fileName.lastIndexOf('.');
-	return (i < 0) ? '' : fileName.substr(i + 1);
-}
-
-const mkdir = (path) => {
-	try {
-		fs.mkdirSync(path);
-	} catch (err) {
-		if (err.code != 'EEXIST') {
-			throw new Error("Error occurred while creating a new directory");
-		}
-	}
-}
-
-const organizeiT = (directory, fileName, type) => {
-  let dir = path.resolve(directory, 'Organize_' + type);
-	mkdir(dir);
-	mv(path.resolve(process.cwd(), fileName), path.resolve(dir, fileName), function (err) {
-		if (err) {
-			throw new Error("Couldn't move " + fileName + " because of following error: " + err);
-		}
-	});
-}
+const helpers = require('helpers');
 
 const audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
 const code = ["CPP", "RB", "PY", "HTML", "CSS", "JS"];
