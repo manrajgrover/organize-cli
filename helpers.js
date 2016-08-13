@@ -2,7 +2,7 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:44:16
+* @Last Modified time: 2016-08-13 20:49:07
 */
 
 'use strict';
@@ -24,6 +24,10 @@ const mkdir = (path) => {
 module.exports.getExtension = (fileName) => {
   let i = fileName.lastIndexOf('.');
   return (i < 0) ? '' : fileName.substr(i + 1);
+}
+
+module.exports.getFileNames = (path) => {
+  return fs.readdirSync(path);
 }
 
 module.exports.organizeiT = (directory, fileName, type) => {

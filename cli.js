@@ -4,10 +4,10 @@
 
 const yargs = require('yargs');
 const chalk = require('chalk');
-const fs = require('fs');
 const helpers = require('./helpers');
 
 const getExtension = helpers.getExtension,
+      getFileNames = helpers.getFileNames,
       organizeiT = helpers.organizeiT;
 
 const audio = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
@@ -31,7 +31,7 @@ const formats = {
 const argv = yargs
   .usage('organize <command>')
   .command('it', 'Organizes current directory', (yargs) => {
-    let fileNames = fs.readdirSync(process.cwd());
+    let fileNames = getFileNames(process.cwd());
     console.log(chalk.green('Scanning'));
     for (let i = 0; i < fileNames.length; i++) {
       let fileExtension = getExtension(fileNames[i]).toUpperCase();
