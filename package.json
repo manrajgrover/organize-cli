@@ -1,6 +1,6 @@
 {
   "name": "organizeit",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "Organize your files and folders in just seconds",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
