@@ -2,7 +2,7 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:53:57
+* @Last Modified time: 2016-08-16 21:00:35
 */
 
 'use strict';
@@ -21,21 +21,23 @@ const mkdir = (path) => {
   }
 }
 
-module.exports.getExtension = (fileName) => {
-  let i = fileName.lastIndexOf('.');
-  return (i < 0) ? '' : fileName.substr(i + 1);
-}
+const helpers = {
+  getExtension: (fileName) => {
+    let i = fileName.lastIndexOf('.');
+    return (i < 0) ? '' : fileName.substr(i + 1);
+  },
+  getFileNames: (directory) => {
+    return fs.readdirSync(directory);
+  },
+  organize: (directory, fileName, type) => {
+    let dir = path.resolve(directory, 'Organize_' + type);
+    mkdir(dir);
+    mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {
+      if (err) {
+        throw new Error("Couldn't move " + fileName + " because of following error: " + err);
+      }
+    });
+  }
+};
 
-module.exports.getFileNames = (directory) => {
-  return fs.readdirSync(directory);
-}
-
-module.exports.organize = (directory, fileName, type) => {
-  let dir = path.resolve(directory, 'Organize_' + type);
-  mkdir(dir);
-  mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {
-    if (err) {
-      throw new Error("Couldn't move " + fileName + " because of following error: " + err);
-    }
-  });
-}
+module.exports = helpers;
