@@ -22,14 +22,14 @@ const mkdir = (path) => {
 }
 
 const helpers = {
-  getExtension: (fileName) => {
+  getExtension(fileName) {
     let i = fileName.lastIndexOf('.');
     return (i < 0) ? '' : fileName.substr(i + 1);
   },
-  getFileNames: (directory) => {
+  getFileNames(directory) {
     return fs.readdirSync(directory);
   },
-  organize: (directory, fileName, type) => {
+  organize(directory, fileName, type) {
     let dir = path.resolve(directory, type);
     mkdir(dir);
     mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {
