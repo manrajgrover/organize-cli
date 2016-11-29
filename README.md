@@ -55,11 +55,12 @@ Downloads
 │   │   └── Cats.jpg
 ```
 
-## Credits
-Thanks to [@bhrigu123](https://github.com/bhrigu123/classifier) for first developing it for Python users.
+## Related
+
+* [classifier](https://github.com/bhrigu123/classifier)
 
 ## Disclaimer
 This is not a perfect software. Things may go wrong and files may not be recoverable. Author has not faced any issue since using but cannot guarantee perfect behavior and hence not liable for any mishap.
 
 ## License
-[MIT](https://github.com/ManrajGrover/organizeit/blob/master/License.md) © Manraj Singh
+MIT © [Manraj Singh](https://github.com/ManrajGrover/organizeit/blob/master/License.md)
