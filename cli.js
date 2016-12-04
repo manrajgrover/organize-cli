@@ -4,10 +4,10 @@
 
 const yargs = require('yargs');
 const chalk = require('chalk');
-const Helpers = require('./helpers');
+const Helper = require('./Helper');
 const formats = require('./formats');
 
-const helperInstance = new Helpers();
+const helperInstance = new Helper();
 
 const argv = yargs
   .usage('organize <command>')

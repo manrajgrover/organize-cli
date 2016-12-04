@@ -11,7 +11,7 @@ const mv = require('mv');
 const fs = require('fs');
 const path = require('path');
 
-class Helpers {
+class Helper {
 
   constructor() { }
 
@@ -45,4 +45,4 @@ class Helpers {
   }
 }
 
-module.exports = Helpers;
+module.exports = Helper;
