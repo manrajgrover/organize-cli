@@ -11,7 +11,7 @@ const helperInstance = new Helper();
 
 const argv = yargs
   .usage('organize <command>')
-  .command('it', 'Organizes current directory', (yargs) => {
+  .command('files', 'Organizes current directory', (yargs) => {
 
     let fileNames = helperInstance.getFileNames(process.cwd());
 
