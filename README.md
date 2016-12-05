@@ -1,4 +1,4 @@
-# organizeit
+# organize-cli
 [![npm](https://img.shields.io/npm/v/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) [![npm](https://img.shields.io/npm/dt/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
 Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
