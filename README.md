@@ -1,4 +1,4 @@
-# organizeit
+# organize-cli
 [![npm](https://img.shields.io/npm/v/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) [![npm](https://img.shields.io/npm/dt/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
 Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
@@ -17,7 +17,8 @@ $ npm install -g organizeit
 
 ## Example
 
-###Before:
+### Before:
+
 ```
 Downloads
 │   ├── Project.docx
@@ -31,7 +32,8 @@ Downloads
 │   ├── Install me.exe
 ```
 
-###After:
+### After:
+
 ```
 Downloads
 │   ├── Music
@@ -63,4 +65,4 @@ Downloads
 This is not a perfect software. Things may go wrong and files may not be recoverable. Author has not faced any issue since using but cannot guarantee perfect behavior and hence not liable for any mishap.
 
 ## License
-MIT © [Manraj Singh](https://github.com/ManrajGrover/organizeit/blob/master/License.md)
+[MIT](https://github.com/ManrajGrover/organizeit/blob/master/LICENSE.md) © Manraj Singh
