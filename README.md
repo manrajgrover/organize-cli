@@ -1,7 +1,7 @@
-# organize-cli
+# organize-cli (f.k.a organizeit)
 [![npm](https://img.shields.io/npm/v/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) [![npm](https://img.shields.io/npm/dt/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
-Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
+> Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
 
 ## Installation
 
