@@ -1,12 +1,12 @@
 # organize-cli
-[![npm](https://img.shields.io/npm/v/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) [![npm](https://img.shields.io/npm/dt/organizeit.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organizeit) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
+[![npm](https://img.shields.io/npm/v/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) [![npm](https://img.shields.io/npm/dt/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
 Organize files in your current directory, by classifying them into folders of music, pdfs, images, etc in seconds
 
 ## Installation
 
 ```
-$ npm install -g organizeit
+$ npm install -g organize-cli
 ```
 
 ## How to use?
@@ -65,4 +65,4 @@ Downloads
 This is not a perfect software. Things may go wrong and files may not be recoverable. Author has not faced any issue since using but cannot guarantee perfect behavior and hence not liable for any mishap.
 
 ## License
-[MIT](https://github.com/ManrajGrover/organizeit/blob/master/LICENSE.md) © Manraj Singh
+[MIT](https://github.com/ManrajGrover/organize-cli/blob/master/LICENSE.md) © Manraj Singh
