@@ -1,10 +1,3 @@
-/*
-* @Author: Manraj Singh
-* @Date:   2016-08-13 20:55:37
-* @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-13 20:57:52
-*/
-
 'use strict';
 
 const Music = ["MP3", "WAV", "WMA", "MKA", "AAC", "MID", "RA", "RAM", "RM", "OGG"];
