@@ -14,22 +14,17 @@ const argv = yargs
   .command('files', 'Organizes current directory', (yargs) => {
 
     let fileNames = helperInstance.getFileNames(process.cwd());
-
     console.log(chalk.green('Scanning'));
 
-    for (let i = 0; i < fileNames.length; i++) {
-
-      let fileExtension = helperInstance.getExtension(fileNames[i]).toUpperCase();
+    fileNames.forEach((fileName) => {
+      let fileExtension = helperInstance.getExtension(fileName).toUpperCase();
 
       for (let type in formats) {
-
         if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-
-          helperInstance.organize(process.cwd(), fileNames[i], type);
-
+          helperInstance.organize(process.cwd(), fileName, type);
         }
       }
-    }
+    });
 
     console.log(chalk.green('Done!'));
   })
