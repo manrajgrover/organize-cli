@@ -2,7 +2,7 @@
 * @Author: Manraj Singh
 * @Date:   2016-08-13 20:28:25
 * @Last Modified by:   Manraj Singh
-* @Last Modified time: 2016-08-16 21:02:42
+* @Last Modified time: 2017-01-03 22:37:23
 */
 
 'use strict';
@@ -19,7 +19,7 @@ class Helper {
     try {
       fs.mkdirSync(path);
     } catch (err) {
-      if (err.code != 'EEXIST') {
+      if (err.code !== 'EEXIST') {
         throw new Error("Error occurred while creating a new directory");
       }
     }
@@ -37,7 +37,8 @@ class Helper {
   organize(directory, fileName, type) {
     let dir = path.resolve(directory, type);
     this.mkdir(dir);
-    mv(path.resolve(directory, fileName), path.resolve(dir, fileName), function (err) {
+
+    mv(path.resolve(directory, fileName), path.resolve(dir, fileName), (err) => {
       if (err) {
         throw new Error("Couldn't move " + fileName + " because of following error: " + err);
       }
