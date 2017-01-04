@@ -1,10 +1,3 @@
-/*
-* @Author: Manraj Singh
-* @Date:   2016-08-13 20:28:25
-* @Last Modified by:   Manraj Singh
-* @Last Modified time: 2017-01-03 22:37:23
-*/
-
 'use strict';
 
 const mv = require('mv');
