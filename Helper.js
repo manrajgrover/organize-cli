@@ -27,11 +27,13 @@ class Helper {
     return fs.readdirSync(directory);
   }
 
-  organize(directory, fileName, type) {
-    let dir = path.resolve(directory, type);
-    this.mkdir(dir);
+  organize(source, output, fileName, type) {
+    this.mkdir(output);
 
-    mv(path.resolve(directory, fileName), path.resolve(dir, fileName), (err) => {
+    let typeDir = path.resolve(output, type);
+    this.mkdir(typeDir);
+
+    mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
       if (err) {
         throw new Error("Couldn't move " + fileName + " because of following error: " + err);
       }
