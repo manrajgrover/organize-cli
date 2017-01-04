@@ -16,7 +16,7 @@ const argv = yargs
 
     const argv = yargs
       .usage('Usage: $0 files [options]')
-      .alias('o', 'output').describe('o', 'Output').string('o')
+      .alias('o', 'output').describe('o', 'Output directory - Creates one if doesn\'t exist ').string('o')
       .alias('s', 'source').describe('s', 'Source directory to organize').string('s')
       .example('$0 files -s ~/Downloads -o .')
       .argv;
