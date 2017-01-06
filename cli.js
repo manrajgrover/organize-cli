@@ -4,11 +4,13 @@
 
 const yargs = require('yargs');
 const chalk = require('chalk');
-const Helper = require('./Helper');
+const helpers = require('./Helper');
 const formats = require('./formats');
 const path = require('path');
 
-const helperInstance = new Helper();
+const getFileNames = helpers.getFileNames;
+const getExtension = helpers.getExtension;
+const organize = helpers.organize;
 
 const argv = yargs
   .usage('organize <command>')
@@ -24,15 +26,15 @@ const argv = yargs
     const outputDirectory = argv.output ? path.resolve(process.cwd(), argv.output) : process.cwd();
     const sourceDirectory = argv.source ? path.resolve(process.cwd(), argv.source) : process.cwd();
 
-    let fileNames = helperInstance.getFileNames(sourceDirectory);
+    let fileNames = getFileNames(sourceDirectory);
     console.log(chalk.green('Scanning'));
 
     fileNames.forEach((fileName) => {
-      let fileExtension = helperInstance.getExtension(fileName).toUpperCase();
+      let fileExtension = getExtension(fileName).toUpperCase();
 
       for (let type in formats) {
         if (formats.hasOwnProperty(type) && formats[type].indexOf(fileExtension) >= 0) {
-          helperInstance.organize(sourceDirectory, outputDirectory, fileName, type);
+          organize(sourceDirectory, outputDirectory, fileName, type);
         }
       }
     });
