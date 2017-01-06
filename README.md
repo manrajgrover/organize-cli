@@ -9,11 +9,34 @@
 $ npm install -g organize-cli
 ```
 
-## How to use?
+## Usage
 
-1. Change directory to the folder you want to organize files in.
-2. Run the package using `organize files` command.
-3. That's it! Spend your time doing something useful now.
+### Commands available
+
+```
+organize <command>
+
+Commands:
+  files  Organizes current directory
+
+Options:
+  -h, --help  Show help                                                [boolean]
+```
+
+#### Command `files`
+
+```
+$ organize files --help
+Usage: organize files [options]
+
+Options:
+  -h, --help    Show help                                              [boolean]
+  -o, --output  Output directory - Creates one if doesn't exist         [string]
+  -s, --source  Source directory to organize                            [string]
+
+Examples:
+  organize files -s ~/Downloads -o .
+```
 
 ## Example
 
