@@ -4,7 +4,7 @@
 
 const yargs = require('yargs');
 const chalk = require('chalk');
-const helpers = require('./Helper');
+const helpers = require('./helpers');
 const formats = require('./formats');
 const path = require('path');
 
