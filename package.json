@@ -42,5 +42,12 @@
     "mv": "^2.1.1",
     "path": "^0.12.7",
     "yargs": "^4.8.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0"
   }
 }
