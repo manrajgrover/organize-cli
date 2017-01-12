@@ -3,5 +3,7 @@
   "rules": {
     "no-console": "off",
     "strict": "off",
+    "prefer-const": "off",
+    "no-restricted-syntax": "off"
   }
 }
