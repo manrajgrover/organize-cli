@@ -38,9 +38,9 @@ const argv = yargs
     for (let fileName of fileNames) {
       if (!fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
         const fileExtension = getExtension(fileName).toUpperCase();
-        for (let type of Object.keys(formats)) {
-          if (formats[type].indexOf(fileExtension) >= 0) {
-            organize(sourceDirectory, outputDirectory, fileName, type);
+        for (let fileType of Object.keys(formats)) {
+          if (formats[fileType].indexOf(fileExtension) >= 0) {
+            organize(sourceDirectory, outputDirectory, fileName, fileType);
           }
         }
       }
