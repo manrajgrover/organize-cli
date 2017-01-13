@@ -88,4 +88,4 @@ Downloads
 This is not a perfect software. Things may go wrong and files may not be recoverable. Author has not faced any issue since using but cannot guarantee perfect behavior and hence not liable for any mishap.
 
 ## License
-[MIT](https://github.com/ManrajGrover/organize-cli/blob/master/LICENSE.md) © Manraj Singh
+[MIT](https://github.com/ManrajGrover/organize-cli/blob/master/License.md) © Manraj Singh
