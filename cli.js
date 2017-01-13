@@ -35,18 +35,27 @@ const argv = yargs
     const fileNames = getFileNames(sourceDirectory);
     console.log(chalk.green('Scanning'));
 
+    let moveFiles = [];
+
     for (let fileName of fileNames) {
       if (!fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
         const fileExtension = getExtension(fileName).toUpperCase();
         for (let fileType of Object.keys(formats)) {
           if (formats[fileType].indexOf(fileExtension) >= 0) {
-            organize(sourceDirectory, outputDirectory, fileName, fileType);
+            moveFiles.push(
+              organize(sourceDirectory, outputDirectory, fileName, fileType)
+            );
           }
         }
       }
     }
 
-    console.log(chalk.green('Done!'));
+    Promise.all(moveFiles).then((messages) => {
+      for (let message of messages) {
+        console.log(chalk.yellow(message));
+      }
+      console.log(chalk.green('Done!'));
+    }).catch(err => console.log(chalk.yellow(err)));
   })
   .help('h')
   .alias('h', 'help')

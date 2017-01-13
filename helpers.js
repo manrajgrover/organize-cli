@@ -27,11 +27,15 @@ const organize = (source, output, fileName, type) => {
   const typeDir = path.resolve(output, type);
   mkdir(typeDir);
 
-  mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
-    if (err) {
-      const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
-      throw new Error(errorMessage);
-    }
+  return new Promise((resolve, reject) => {
+    mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
+      if (err) {
+        const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
+        reject(new Error(errorMessage));
+      } else {
+        resolve(`Moved ${fileName} to ${type} folder`);
+      }
+    });
   });
 };
 
