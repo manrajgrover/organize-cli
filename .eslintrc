@@ -4,6 +4,8 @@
     "no-console": "off",
     "strict": "off",
     "prefer-const": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "comma-dangle": "off",
+    "no-unused-vars": "off"
   }
 }
