@@ -46,6 +46,10 @@ const argv = yargs
             moveFiles.push(
               organize(sourceDirectory, outputDirectory, fileName, fileType)
             );
+          } else {
+            moveFiles.push(
+              organize(sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
+            );
           }
         }
       }
