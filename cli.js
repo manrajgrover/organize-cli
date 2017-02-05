@@ -60,7 +60,7 @@ const argv = yargs
         console.log(chalk.yellow(message));
       }
       console.log(chalk.green('Done!'));
-    }).catch(err => console.log(chalk.yellow(err)));
+    }).catch(err => console.log(chalk.red(err)));
   })
   .help('h')
   .alias('h', 'help')
