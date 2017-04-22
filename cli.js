@@ -36,10 +36,7 @@ const argv = yargs
     let moveFiles = [];
 
     for (let fileName of fileNames) {
-      if (fileName.indexOf('.') === 0) {
-        continue;
-      }
-      if (!fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
+      if (fileName.indexOf('.') !== 0 && !fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
         const fileExtension = getExtension(fileName).toUpperCase();
         for (let fileType of Object.keys(formats)) {
           if (formats[fileType].indexOf(fileExtension) >= 0) {
