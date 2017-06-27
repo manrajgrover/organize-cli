@@ -38,16 +38,23 @@ const argv = yargs
     for (let fileName of fileNames) {
       if (fileName.indexOf('.') !== 0 && !fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
         const fileExtension = getExtension(fileName).toUpperCase();
+        let isMoved = false;
+
         for (let fileType of Object.keys(formats)) {
           if (formats[fileType].indexOf(fileExtension) >= 0) {
             moveFiles.push(
               organize(sourceDirectory, outputDirectory, fileName, fileType)
             );
-          } else {
-            moveFiles.push(
-              organize(sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
-            );
+
+            isMoved = true;
+            break;
           }
+        }
+
+        if (!isMoved) {
+          moveFiles.push(
+            organize(sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
+          );
         }
       }
     }
