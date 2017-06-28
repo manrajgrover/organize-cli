@@ -1,3 +1,5 @@
+'use strict';
+
 const mv = require('mv');
 const fs = require('fs');
 const path = require('path');
