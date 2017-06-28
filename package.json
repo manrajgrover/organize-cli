@@ -1,6 +1,6 @@
 {
   "name": "organize-cli",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Organize your files and folders in just seconds",
   "scripts": {
     "lint": "eslint ./cli.js ./formats.js ./helpers.js"
