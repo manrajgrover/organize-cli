@@ -6,6 +6,7 @@ const fs = require('fs');
 const helpers = require('./helpers');
 const formats = require('./formats');
 const path = require('path');
+const ora = require('ora');
 
 const getFileNames = helpers.getFileNames;
 const getExtension = helpers.getExtension;
@@ -25,15 +26,16 @@ const argv = yargs
       .example('$0 files -s ~/Downloads -o .')
       .argv;
 
+    let spinner = ora('Scanning').start();
+
     const outputDirectory = argvFiles.output ? path.resolve(
       process.cwd(), argvFiles.output) : process.cwd();
     const sourceDirectory = argvFiles.source ? path.resolve(
       process.cwd(), argvFiles.source) : process.cwd();
 
     const fileNames = getFileNames(sourceDirectory);
-    console.log(chalk.green('Scanning'));
 
-    let moveFiles = [];
+    const movedFiles = [];
 
     for (let fileName of fileNames) {
       if (fileName.indexOf('.') !== 0 && !fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
@@ -42,29 +44,40 @@ const argv = yargs
 
         for (let fileType of Object.keys(formats)) {
           if (formats[fileType].indexOf(fileExtension) >= 0) {
-            moveFiles.push(
-              organize(sourceDirectory, outputDirectory, fileName, fileType)
+            spinner.info(`Moving file ${fileName} to ${fileType}`);
+            movedFiles.push(
+              organize(spinner, sourceDirectory, outputDirectory, fileName, fileType)
             );
-
             isMoved = true;
             break;
           }
         }
 
         if (!isMoved) {
-          moveFiles.push(
-            organize(sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
+          spinner.info(`Moving file ${fileName} to Miscellaneous`);
+          movedFiles.push(
+            organize(spinner, sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
           );
         }
       }
     }
 
-    Promise.all(moveFiles).then((messages) => {
-      for (let message of messages) {
-        console.log(chalk.yellow(message));
-      }
-      console.log(chalk.green('Done!'));
-    }).catch(err => console.log(chalk.red(err)));
+    Promise.all(movedFiles.map(p => p.catch(e => e)))
+      .then((messages) => {
+        let isError = false;
+        for (let message of messages) {
+          if (message instanceof Error) {
+            spinner.fail("Couldn't move all files!");
+            isError = true;
+            break;
+          }
+        }
+
+        if (!isError) {
+          spinner.succeed('Moved all files!');
+        }
+      })
+      .catch(err => spinner.fail('An error occured!'));
   })
   .help('h')
   .alias('h', 'help')

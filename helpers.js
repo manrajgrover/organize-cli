@@ -19,7 +19,7 @@ const getExtension = (fileName) => {
 
 const getFileNames = directory => fs.readdirSync(directory);
 
-const organize = (source, output, fileName, type) => {
+const organize = (spinner, source, output, fileName, type) => {
   mkdir(output);
 
   const typeDir = path.resolve(output, type);
@@ -29,9 +29,12 @@ const organize = (source, output, fileName, type) => {
     mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
       if (err) {
         const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
+        spinner.warn(errorMessage);
         reject(new Error(errorMessage));
       } else {
-        resolve(`Moved ${fileName} to ${type} folder`);
+        const successMessage = `Moved ${fileName} to ${type} folder`;
+        spinner.info(successMessage);
+        resolve(successMessage);
       }
     });
   });
