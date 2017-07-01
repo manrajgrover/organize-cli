@@ -3,10 +3,10 @@
   "version": "0.5.1",
   "description": "Organize your files and folders in just seconds",
   "scripts": {
-    "lint": "eslint ./cli.js ./formats.js ./helpers.js"
+    "lint": "eslint ./src/cli.js ./src/formats.js ./src/helpers.js"
   },
   "bin": {
-    "organize": "./cli.js"
+    "organize": "./dist/cli.js"
   },
   "engines": {
     "node": ">=4.5.0"
@@ -49,6 +49,12 @@
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-react": "^6.9.0"
+    "eslint-plugin-react": "^6.9.0",
+    "babel-preset-es2015": "6.9.0",
+    "babelify": "7.3.0",
+    "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
+    "gulp-util": "^3.0.8",
+    "vinyl-source-stream": "1.1.0"
   }
 }
