@@ -3,7 +3,7 @@ const assert = require('assert');
 const process = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
-const helpers = require('../src/helpers');
+const { mkdir } = require('../src/helpers');
 
 const TESTING_FOLDER = path.join(__dirname, '..', 'testing');
 
@@ -27,6 +27,7 @@ const rmDir = (dirName) => {
 
 describe('Organize Files', () => {
   beforeEach(() => {
+    mkdir(TESTING_FOLDER);
     rmDir(TESTING_FOLDER);
   });
 
