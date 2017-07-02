@@ -45,6 +45,7 @@ var organize = function organize(spinner, source, output, fileName, type) {
 };
 
 module.exports = {
+  mkdir: mkdir,
   getExtension: getExtension,
   getFileNames: getFileNames,
   organize: organize

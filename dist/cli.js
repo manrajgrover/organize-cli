@@ -6,14 +6,14 @@
 var yargs = require('yargs');
 var chalk = require('chalk');
 var fs = require('fs');
-var helpers = require('./helpers');
 var formats = require('./formats');
 var path = require('path');
 var ora = require('ora');
 
-var getFileNames = helpers.getFileNames;
-var getExtension = helpers.getExtension;
-var organize = helpers.organize;
+var _require = require('./helpers'),
+    getFileNames = _require.getFileNames,
+    getExtension = _require.getExtension,
+    organize = _require.organize;
 
 var argv = yargs.usage('organize <command>').command('files', 'Organizes current directory', function (yargsFiles) {
   var argvFiles = yargsFiles.usage('Usage: $0 files [options]').alias('o', 'output').describe('o', 'Output directory - Creates one if doesn\'t exist ').string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').example('$0 files -s ~/Downloads -o .').argv;
