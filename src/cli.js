@@ -5,14 +5,11 @@
 const yargs = require('yargs');
 const chalk = require('chalk');
 const fs = require('fs');
-const helpers = require('./helpers');
 const formats = require('./formats');
 const path = require('path');
 const ora = require('ora');
 
-const getFileNames = helpers.getFileNames;
-const getExtension = helpers.getExtension;
-const organize = helpers.organize;
+const { getFileNames, getExtension, organize } = require('./helpers');
 
 const argv = yargs
   .usage('organize <command>')
