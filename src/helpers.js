@@ -43,6 +43,7 @@ const organize = (spinner, source, output, fileName, type) => {
 };
 
 module.exports = {
+  mkdir,
   getExtension,
   getFileNames,
   organize,
