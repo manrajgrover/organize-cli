@@ -6,6 +6,7 @@
     "prefer-const": "off",
     "no-restricted-syntax": "off",
     "comma-dangle": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
