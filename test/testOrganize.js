@@ -51,7 +51,7 @@ describe('Organize Files', () => {
   });
 
   it('should organize files', () => {
-    shell.exec(`organize files -s ${TESTING_FOLDER}`, (status, output) => {
+    shell.exec(`organize files -s ${TESTING_FOLDER} -o ${TESTING_FOLDER}`, (status, output) => {
       console.log('Exit status:', status);
       console.log('Program output:', output);
     });
