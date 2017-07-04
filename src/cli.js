@@ -27,10 +27,10 @@ const argv = yargs
 
     let spinner = ora('Scanning').start();
 
-    const outputDirectory = argvFiles.output ? path.resolve(
-      process.cwd(), argvFiles.output) : process.cwd();
     const sourceDirectory = argvFiles.source ? path.resolve(
       process.cwd(), argvFiles.source) : process.cwd();
+    const outputDirectory = argvFiles.output ? path.resolve(
+      process.cwd(), argvFiles.output) : sourceDirectory;
 
     const fileNames = getFileNames(sourceDirectory);
 
