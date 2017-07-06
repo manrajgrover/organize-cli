@@ -20,8 +20,8 @@ var argv = yargs.usage('organize <command>').command('files', 'Organizes current
 
   var spinner = ora('Scanning').start();
 
-  var outputDirectory = argvFiles.output ? path.resolve(process.cwd(), argvFiles.output) : process.cwd();
   var sourceDirectory = argvFiles.source ? path.resolve(process.cwd(), argvFiles.source) : process.cwd();
+  var outputDirectory = argvFiles.output ? path.resolve(process.cwd(), argvFiles.output) : sourceDirectory;
 
   var fileNames = getFileNames(sourceDirectory);
 

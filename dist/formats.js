@@ -1,7 +1,7 @@
 'use strict';
 
 var Music = ['MP3', 'WAV', 'WMA', 'MKA', 'AAC', 'MID', 'RA', 'RAM', 'RM', 'OGG'];
-var Codes = ['CPP', 'RB', 'PY', 'HTML', 'CSS', 'JS'];
+var Codes = ['CPP', 'RB', 'PY', 'HTML', 'CSS', 'JS', 'PHP'];
 var Compressed = ['RAR', 'JAR', 'ZIP', 'TAR', 'MAR', 'ISO', 'LZ', '7ZIP', 'TGZ', 'GZ', 'BZ2'];
 var Documents = ['DOC', 'DOCX', 'PPT', 'PPTX', 'PAGES', 'PDF', 'ODT', 'ODP', 'XLSX', 'XLS', 'ODS', 'TXT', 'IN', 'OUT', 'MD'];
 var Images = ['JPG', 'JPEG', 'GIF', 'PNG', 'SVG'];
