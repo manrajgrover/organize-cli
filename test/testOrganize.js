@@ -1,11 +1,12 @@
 /* eslint-env mocha */
 const assert = require('assert');
-const process = require('child_process');
-const fs = require('fs-extra');
+const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path');
 const { mkdir } = require('../src/helpers');
 const formats = require('../src/formats');
-const shell = require('shelljs');
+const syncExec = require('sync-exec');
+const commandExistsSync = require('command-exists').sync;
 
 const TESTING_FOLDER = path.join(__dirname, '..', 'testing');
 
@@ -21,7 +22,7 @@ const removeDirsFromFolder = (dirName) => {
     for (let i = 0; i < files.length; i += 1) {
       let filePath = path.join(dirName, files[i]);
       if (fs.statSync(filePath).isDirectory()) {
-        fs.remove(filePath);
+        fse.remove(filePath);
       }
     }
   }
@@ -45,15 +46,19 @@ describe('Organize Files', () => {
     fs.writeFileSync(path.join(TESTING_FOLDER, 'test.ai'), '');
     fs.writeFileSync(path.join(TESTING_FOLDER, 'test.log'), '');
 
-    if (!shell.which('organize')) {
-      throw new Error('organize command not found');
+    if (!commandExistsSync('organize')) {
+      throw new Error('Command "organize" command not found');
     }
   });
 
   it('should organize files', () => {
-    shell.exec(`organize files -s ${TESTING_FOLDER} -o ${TESTING_FOLDER}`, (status, output) => {
-      console.log('Exit status:', status);
-      console.log('Program output:', output);
-    });
+    syncExec(`organize files -s ${TESTING_FOLDER}`);
+
+    for (let folderType of Object.keys(formats)) {
+      for (let fileType of formats[folderType]) {
+        fileType = fileType.toLowerCase();
+        assert(fs.existsSync(path.join(TESTING_FOLDER, folderType, `test.${fileType}`), ''));
+      }
+    }
   });
 });
