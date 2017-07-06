@@ -57,7 +57,7 @@ describe('Organize Files', () => {
     for (let folderType of Object.keys(formats)) {
       for (let fileType of formats[folderType]) {
         fileType = fileType.toLowerCase();
-        assert(fs.existsSync(path.join(TESTING_FOLDER, folderType, `test.${fileType}`), ''));
+        assert(fs.existsSync(path.join(TESTING_FOLDER, folderType, `test.${fileType}`)));
       }
     }
   });
