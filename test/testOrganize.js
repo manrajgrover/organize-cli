@@ -52,7 +52,7 @@ describe('Organize Files', () => {
   });
 
   it('should organize files', () => {
-    syncExec(`organize files -s ${TESTING_FOLDER}`);
+    syncExec(`organize -s ${TESTING_FOLDER}`);
 
     for (let folderType of Object.keys(formats)) {
       for (let fileType of formats[folderType]) {
