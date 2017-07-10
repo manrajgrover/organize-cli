@@ -14,7 +14,7 @@ var mkdir = function mkdir(folderPath) {
   }
 };
 
-var getExtension = function getExtension(fileName) {
+var getFileExtension = function getFileExtension(fileName) {
   var i = fileName.lastIndexOf('.');
   return i < 0 ? '' : fileName.substr(i + 1);
 };
@@ -46,7 +46,7 @@ var organize = function organize(spinner, source, output, fileName, type) {
 
 module.exports = {
   mkdir: mkdir,
-  getExtension: getExtension,
+  getFileExtension: getFileExtension,
   getFileNames: getFileNames,
   organize: organize
 };

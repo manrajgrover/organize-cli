@@ -14,7 +14,7 @@ const mkdir = (folderPath) => {
   }
 };
 
-const getExtension = (fileName) => {
+const getFileExtension = (fileName) => {
   const i = fileName.lastIndexOf('.');
   return (i < 0) ? '' : fileName.substr(i + 1);
 };
@@ -44,7 +44,7 @@ const organize = (spinner, source, output, fileName, type) => {
 
 module.exports = {
   mkdir,
-  getExtension,
+  getFileExtension,
   getFileNames,
   organize,
 };
