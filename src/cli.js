@@ -11,35 +11,60 @@ const ora = require('ora');
 
 const { getFileNames, getFileExtension, organize } = require('./helpers');
 
-const moveUsingFormatsConfig = (fileNames, sourceDirectory, outputDirectory, spinner) => {
-  const movedFiles = [];
+const isValidFile = (name, dir) => name.indexOf('.') !== 0 && !fs.statSync(path.join(dir, name)).isDirectory();
 
-  for (let fileName of fileNames) {
-    if (fileName.indexOf('.') !== 0 && !fs.statSync(path.join(sourceDirectory, fileName)).isDirectory()) {
-      const fileExtension = getFileExtension(fileName).toUpperCase();
+const moveUsingFormatsConfig = (names, sourceDir, outputDir, spinner) => {
+  const moved = [];
+
+  for (let name of names) {
+    if (isValidFile(name, sourceDir)) {
+      const extension = getFileExtension(name).toUpperCase();
       let isMoved = false;
 
-      for (let fileType of Object.keys(formats)) {
-        if (formats[fileType].indexOf(fileExtension) >= 0) {
-          spinner.info(`Moving file ${fileName} to ${fileType}`);
-          movedFiles.push(
-            organize(spinner, sourceDirectory, outputDirectory, fileName, fileType)
-          );
+      for (let type of Object.keys(formats)) {
+        if (formats[type].indexOf(extension) >= 0) {
+          spinner.info(`Moving file ${name} to ${type}`);
+
+          const pOrganize = organize(spinner, sourceDir, outputDir, name, type);
+
+          moved.push(pOrganize);
           isMoved = true;
           break;
         }
       }
 
       if (!isMoved) {
-        spinner.info(`Moving file ${fileName} to Miscellaneous`);
-        movedFiles.push(
-          organize(spinner, sourceDirectory, outputDirectory, fileName, 'Miscellaneous')
+        spinner.info(`Moving file ${name} to Miscellaneous`);
+        moved.push(
+          organize(spinner, sourceDir, outputDir, name, 'Miscellaneous')
         );
       }
     }
   }
 
-  return movedFiles;
+  return moved;
+};
+
+const moveSpecificFileTypes = (spFormats, names, sourceDir, outputDir, spinner) => {
+  const moved = [];
+
+  for (let name of names) {
+    if (isValidFile(name, sourceDir)) {
+      const extension = getFileExtension(name).toUpperCase();
+
+      for (let type of Object.keys(formats)) {
+        if (formats[type].indexOf(extension) >= 0) {
+          spinner.info(`Moving file ${name} to ${type}`);
+
+          const pOrganize = organize(spinner, sourceDir, outputDir, name, type);
+          moved.push(pOrganize);
+          break;
+        }
+      }
+    }
+  }
+
+  return moved;
 };
 
 const argv = yargs
@@ -63,16 +88,25 @@ const argv = yargs
 
 let spinner = ora('Scanning').start();
 
-const sourceDirectory = argv.source ? path.resolve(
+const sourceDir = argv.source ? path.resolve(
   process.cwd(), argv.source) : process.cwd();
-const outputDirectory = argv.output ? path.resolve(
-  process.cwd(), argv.output) : sourceDirectory;
+let outputDir = argv.output ? path.resolve(
+  process.cwd(), argv.output) : sourceDir;
 
-const fileNames = getFileNames(sourceDirectory);
+const names = getFileNames(sourceDir);
+let moved = [];
 
-const movedFiles = moveUsingFormatsConfig(fileNames, sourceDirectory, outputDirectory, spinner);
+if (argv.st && argv.sf) {
+  const spFormats = argv.sf.split(',');
+  const folder = argv.sf;
 
-Promise.all(movedFiles.map(p => p.catch(e => e)))
+  outputDir = path.resolve(spFormats, folder);
+  moved = moveSpecificFileTypes(spFormats, names, sourceDir, outputDir, spinner);
+} else {
+  moved = moveUsingFormatsConfig(names, sourceDir, outputDir, spinner);
+}
+
+Promise.all(moved.map(p => p.catch(e => e)))
   .then((messages) => {
     let isError = false;
     for (let message of messages) {
