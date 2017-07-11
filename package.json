@@ -9,9 +9,6 @@
   "bin": {
     "organize": "./dist/cli.js"
   },
-  "engines": {
-    "node": ">=4.5.0"
-  },
   "preferGlobal": true,
   "repository": {
     "type": "git",
