@@ -53,6 +53,12 @@ describe('Organize Files', () => {
     fs.writeFileSync(path.join(SOURCE_FOLDER, 'test.ai'), '');
     fs.writeFileSync(path.join(SOURCE_FOLDER, 'test.log'), '');
 
+    // Some Miscellaneous files in source
+    fs.utimesSync(path.join(SOURCE_FOLDER, 'test'), '1499599912', '1499599912');
+    fs.utimesSync(path.join(SOURCE_FOLDER, 'test.apib'), '1499699912', '1499699912');
+    fs.utimesSync(path.join(SOURCE_FOLDER, 'test.ai'), '1499299912', '1499299912');
+    fs.utimesSync(path.join(SOURCE_FOLDER, 'test.log'), '1499399912', '1499399912');
+
     if (!commandExistsSync('organize')) {
       throw new Error('Command "organize" command not found');
     }
