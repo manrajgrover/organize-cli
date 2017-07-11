@@ -13,7 +13,7 @@ const TESTING_FOLDER = path.join(__dirname, '..', 'testing');
 const SOURCE_FOLDER = path.join(TESTING_FOLDER, 'source');
 const OUTPUT_FOLDER = path.join(TESTING_FOLDER, 'output');
 
-const removeDirsFromFolder = (dirName) => {
+const removeDirsFromFolder = async (dirName) => {
   let files;
   try {
     files = fs.readdirSync(dirName);
@@ -43,16 +43,9 @@ describe('Organize Files', () => {
     for (let folderType of Object.keys(formats)) {
       for (let fileType of formats[folderType]) {
         fileType = fileType.toLowerCase();
-        fs.writeFileSync(path.join(TESTING_FOLDER, `test.${fileType}`), '');
         fs.writeFileSync(path.join(SOURCE_FOLDER, `test.${fileType}`), '');
       }
     }
-
-    // Some Miscellaneous files
-    fs.writeFileSync(path.join(TESTING_FOLDER, 'test'), '');
-    fs.writeFileSync(path.join(TESTING_FOLDER, 'test.apib'), '');
-    fs.writeFileSync(path.join(TESTING_FOLDER, 'test.ai'), '');
-    fs.writeFileSync(path.join(TESTING_FOLDER, 'test.log'), '');
 
     // Some Miscellaneous files in source
     fs.writeFileSync(path.join(SOURCE_FOLDER, 'test'), '');
@@ -62,17 +55,6 @@ describe('Organize Files', () => {
 
     if (!commandExistsSync('organize')) {
       throw new Error('Command "organize" command not found');
-    }
-  });
-
-  it('should organize files with defaults', () => {
-    syncExec('organize');
-
-    for (let folderType of Object.keys(formats)) {
-      for (let fileType of formats[folderType]) {
-        fileType = fileType.toLowerCase();
-        assert(fs.existsSync(path.join(TESTING_FOLDER, folderType, `test.${fileType}`)));
-      }
     }
   });
 
