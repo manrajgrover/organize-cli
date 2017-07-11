@@ -86,6 +86,11 @@ const argv = yargs
   .alias('h', 'help')
   .argv;
 
+if (!argv.source) {
+  console.log(chalk.cyan('Please provide a source, do a `organize -h` for help'));
+  process.exit(-1);
+}
+
 let spinner = ora('Scanning').start();
 
 const sourceDir = argv.source ? path.resolve(

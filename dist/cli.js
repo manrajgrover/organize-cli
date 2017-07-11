@@ -157,6 +157,11 @@ var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, names, sou
 
 var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('st', 'specific-type').describe('st', 'Specific types to organize - comma separated string of file extensions').string('st').alias('sf', 'specific-folder').describe('sf', 'Specific folder to move specific files to').string('sf').example('$0 -s ~/Downloads -o . -st "mp3, wav" -sf "Songs"').help('h').alias('h', 'help').argv;
 
+if (!argv.source) {
+  console.log(chalk.cyan('Please provide a source, do a `organize -h` for help'));
+  process.exit(-1);
+}
+
 var spinner = ora('Scanning').start();
 
 var sourceDir = argv.source ? path.resolve(process.cwd(), argv.source) : process.cwd();
