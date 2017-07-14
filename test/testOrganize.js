@@ -33,9 +33,9 @@ const removeDirsFromFolder = (dirName) => {
 
 describe('Organize Files', () => {
   beforeEach(() => {
+    mkdir(TESTING_FOLDER);
     removeDirsFromFolder(TESTING_FOLDER);
 
-    mkdir(TESTING_FOLDER);
     mkdir(SOURCE_FOLDER);
     mkdir(OUTPUT_FOLDER);
 
