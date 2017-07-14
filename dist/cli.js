@@ -91,8 +91,18 @@ var moveUsingFormatsConfig = function moveUsingFormatsConfig(names, sourceDir, o
   return moved;
 };
 
-var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, names, sourceDir, outputDir, spinner) {
+var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, spFolder, fileNames, sourceDir, outputDir, spinner) {
+  var names = fileNames.filter(function (name) {
+    if (!isValidFile(name, sourceDir)) {
+      return false;
+    }
+
+    var extension = getFileExtension(name);
+    return spFormats.indexOf(extension) !== -1;
+  });
+
   var moved = [];
+  console.log(moved);
 
   var _iteratorNormalCompletion3 = true;
   var _didIteratorError3 = false;
@@ -102,40 +112,10 @@ var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, names, sou
     for (var _iterator3 = names[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
       var name = _step3.value;
 
-      if (isValidFile(name, sourceDir)) {
-        var extension = getFileExtension(name).toUpperCase();
+      spinner.info('Moving file ' + name + ' to ' + spFolder);
 
-        var _iteratorNormalCompletion4 = true;
-        var _didIteratorError4 = false;
-        var _iteratorError4 = undefined;
-
-        try {
-          for (var _iterator4 = Object.keys(formats)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-            var type = _step4.value;
-
-            if (formats[type].indexOf(extension) >= 0) {
-              spinner.info('Moving file ' + name + ' to ' + type);
-
-              var pOrganize = organize(spinner, sourceDir, outputDir, name, type);
-              moved.push(pOrganize);
-              break;
-            }
-          }
-        } catch (err) {
-          _didIteratorError4 = true;
-          _iteratorError4 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-              _iterator4.return();
-            }
-          } finally {
-            if (_didIteratorError4) {
-              throw _iteratorError4;
-            }
-          }
-        }
-      }
+      var pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder);
+      moved.push(pOrganize);
     }
   } catch (err) {
     _didIteratorError3 = true;
@@ -155,7 +135,7 @@ var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, names, sou
   return moved;
 };
 
-var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('st', 'specific-type').describe('st', 'Specific types to organize - comma separated string of file extensions').string('st').alias('sf', 'specific-folder').describe('sf', 'Specific folder to move specific files to').string('sf').example('$0 -s ~/Downloads -o . -st "mp3, wav" -sf "Songs"').help('h').alias('h', 'help').argv;
+var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - comma separated string of file extensions').string('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"').help('h').alias('h', 'help').argv;
 
 if (!argv.source) {
   console.log(chalk.cyan('Please provide a source, do a `organize -h` for help'));
@@ -170,12 +150,13 @@ var outputDir = argv.output ? path.resolve(process.cwd(), argv.output) : sourceD
 var names = getFileNames(sourceDir);
 var moved = [];
 
-if (argv.st && argv.sf) {
-  var spFormats = argv.sf.split(',');
-  var folder = argv.sf;
+if (argv.t && argv.f) {
+  var spFormats = argv.t.split(',').map(function (ext) {
+    return ext.trim();
+  });
+  var spFolder = argv.f;
 
-  outputDir = path.resolve(spFormats, folder);
-  moved = moveSpecificFileTypes(spFormats, names, sourceDir, outputDir, spinner);
+  moved = moveSpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
 } else {
   moved = moveUsingFormatsConfig(names, sourceDir, outputDir, spinner);
 }
@@ -186,13 +167,13 @@ Promise.all(moved.map(function (p) {
   });
 })).then(function (messages) {
   var isError = false;
-  var _iteratorNormalCompletion5 = true;
-  var _didIteratorError5 = false;
-  var _iteratorError5 = undefined;
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
 
   try {
-    for (var _iterator5 = messages[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-      var message = _step5.value;
+    for (var _iterator4 = messages[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var message = _step4.value;
 
       if (message instanceof Error) {
         spinner.fail("Couldn't move all files!");
@@ -201,16 +182,16 @@ Promise.all(moved.map(function (p) {
       }
     }
   } catch (err) {
-    _didIteratorError5 = true;
-    _iteratorError5 = err;
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion5 && _iterator5.return) {
-        _iterator5.return();
+      if (!_iteratorNormalCompletion4 && _iterator4.return) {
+        _iterator4.return();
       }
     } finally {
-      if (_didIteratorError5) {
-        throw _iteratorError5;
+      if (_didIteratorError4) {
+        throw _iteratorError4;
       }
     }
   }
