@@ -13,7 +13,7 @@ const TESTING_FOLDER = path.join(__dirname, '..', 'testing');
 const SOURCE_FOLDER = path.join(TESTING_FOLDER, 'source');
 const OUTPUT_FOLDER = path.join(TESTING_FOLDER, 'output');
 
-const removeDirsFromFolder = async (dirName) => {
+const removeDirsFromFolder = (dirName) => {
   let files;
   try {
     files = fs.readdirSync(dirName);
@@ -33,10 +33,9 @@ const removeDirsFromFolder = async (dirName) => {
 
 describe('Organize Files', () => {
   beforeEach(() => {
-    mkdir(TESTING_FOLDER);
-
     removeDirsFromFolder(TESTING_FOLDER);
 
+    mkdir(TESTING_FOLDER);
     mkdir(SOURCE_FOLDER);
     mkdir(OUTPUT_FOLDER);
 
@@ -84,5 +83,12 @@ describe('Organize Files', () => {
         assert(fs.existsSync(path.join(OUTPUT_FOLDER, folderType, `test.${fileType}`)));
       }
     }
+  });
+
+  it('should organize files with specific file type', () => {
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t 'ai, 3gp' -f 'misc'`);
+
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.3gp')));
   });
 });
