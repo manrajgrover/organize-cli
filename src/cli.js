@@ -45,23 +45,24 @@ const moveUsingFormatsConfig = (names, sourceDir, outputDir, spinner) => {
   return moved;
 };
 
-const moveSpecificFileTypes = (spFormats, names, sourceDir, outputDir, spinner) => {
+const moveSpecificFileTypes = (spFormats, spFolder, fileNames, sourceDir, outputDir, spinner) => {
+  const names = fileNames.filter((name) => {
+    if (!isValidFile(name, sourceDir)) {
+      return false;
+    }
+
+    const extension = getFileExtension(name);
+    return spFormats.indexOf(extension) !== -1;
+  });
+
   const moved = [];
+  console.log(moved);
 
   for (let name of names) {
-    if (isValidFile(name, sourceDir)) {
-      const extension = getFileExtension(name).toUpperCase();
+    spinner.info(`Moving file ${name} to ${spFolder}`);
 
-      for (let type of Object.keys(formats)) {
-        if (formats[type].indexOf(extension) >= 0) {
-          spinner.info(`Moving file ${name} to ${type}`);
-
-          const pOrganize = organize(spinner, sourceDir, outputDir, name, type);
-          moved.push(pOrganize);
-          break;
-        }
-      }
-    }
+    const pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder);
+    moved.push(pOrganize);
   }
 
   return moved;
@@ -75,13 +76,13 @@ const argv = yargs
   .alias('s', 'source')
     .describe('s', 'Source directory to organize')
     .string('s')
-  .alias('st', 'specific-type')
-    .describe('st', 'Specific types to organize - comma separated string of file extensions')
-    .string('st')
-  .alias('sf', 'specific-folder')
-    .describe('sf', 'Specific folder to move specific files to')
-    .string('sf')
-  .example('$0 -s ~/Downloads -o . -st "mp3, wav" -sf "Songs"')
+  .alias('t', 'type')
+    .describe('t', 'Specific types to organize - comma separated string of file extensions')
+    .string('t')
+  .alias('f', 'folder')
+    .describe('f', 'Specific folder to move specific files to')
+    .string('f')
+  .example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"')
   .help('h')
   .alias('h', 'help')
   .argv;
@@ -98,15 +99,14 @@ const sourceDir = argv.source ? path.resolve(
 let outputDir = argv.output ? path.resolve(
   process.cwd(), argv.output) : sourceDir;
 
-const names = getFileNames(sourceDir);
+let names = getFileNames(sourceDir);
 let moved = [];
 
-if (argv.st && argv.sf) {
-  const spFormats = argv.sf.split(',');
-  const folder = argv.sf;
+if (argv.t && argv.f) {
+  const spFormats = argv.t.split(',').map(ext => ext.trim());
+  const spFolder = argv.f;
 
-  outputDir = path.resolve(spFormats, folder);
-  moved = moveSpecificFileTypes(spFormats, names, sourceDir, outputDir, spinner);
+  moved = moveSpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
 } else {
   moved = moveUsingFormatsConfig(names, sourceDir, outputDir, spinner);
 }
