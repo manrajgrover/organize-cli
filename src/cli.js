@@ -5,68 +5,14 @@
 const yargs = require('yargs');
 const chalk = require('chalk');
 const fs = require('fs');
-const formats = require('./formats');
 const path = require('path');
 const ora = require('ora');
 
-const { getFileNames, getFileExtension, organize } = require('./helpers');
-
-const isValidFile = (name, dir) => name.indexOf('.') !== 0 && !fs.statSync(path.join(dir, name)).isDirectory();
-
-const moveUsingFormatsConfig = (names, sourceDir, outputDir, spinner) => {
-  const moved = [];
-
-  for (let name of names) {
-    if (isValidFile(name, sourceDir)) {
-      const extension = getFileExtension(name).toUpperCase();
-      let isMoved = false;
-
-      for (let type of Object.keys(formats)) {
-        if (formats[type].indexOf(extension) >= 0) {
-          spinner.info(`Moving file ${name} to ${type}`);
-
-          const pOrganize = organize(spinner, sourceDir, outputDir, name, type);
-
-          moved.push(pOrganize);
-          isMoved = true;
-          break;
-        }
-      }
-
-      if (!isMoved) {
-        spinner.info(`Moving file ${name} to Miscellaneous`);
-        moved.push(
-          organize(spinner, sourceDir, outputDir, name, 'Miscellaneous')
-        );
-      }
-    }
-  }
-
-  return moved;
-};
-
-const moveSpecificFileTypes = (spFormats, spFolder, fileNames, sourceDir, outputDir, spinner) => {
-  const names = fileNames.filter((name) => {
-    if (!isValidFile(name, sourceDir)) {
-      return false;
-    }
-
-    const extension = getFileExtension(name);
-    return spFormats.indexOf(extension) !== -1;
-  });
-
-  const moved = [];
-  console.log(moved);
-
-  for (let name of names) {
-    spinner.info(`Moving file ${name} to ${spFolder}`);
-
-    const pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder);
-    moved.push(pOrganize);
-  }
-
-  return moved;
-};
+const {
+  getFileNames,
+  moveUsingFormatsConfig,
+  moveSpecificFileTypes
+} = require('./helpers');
 
 const argv = yargs
   .usage('Usage: $0 [options]')
