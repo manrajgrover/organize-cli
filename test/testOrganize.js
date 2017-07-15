@@ -63,6 +63,13 @@ describe('Organize Files', () => {
     }
   });
 
+  it('should throw error for missing args', () => {
+    const stderr = syncExec('organize').stderr;
+
+    assert.notEqual(stderr, '');
+    assert(stderr.includes('Missing required argument: s'));
+  });
+
   it('should organize files with source', () => {
     syncExec(`organize -s ${SOURCE_FOLDER}`);
 
