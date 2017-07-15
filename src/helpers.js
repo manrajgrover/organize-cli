@@ -22,8 +22,6 @@ const getFileExtension = (fileName) => {
   return (i < 0) ? '' : fileName.substr(i + 1);
 };
 
-const getFileNames = directory => fs.readdirSync(directory);
-
 const organize = (spinner, source, output, fileName, type) => {
   mkdir(output);
 
@@ -102,7 +100,6 @@ const moveSpecificFileTypes = (spFormats, spFolder, fileNames, sourceDir, output
 module.exports = {
   mkdir,
   getFileExtension,
-  getFileNames,
   organize,
   moveUsingFormatsConfig,
   moveSpecificFileTypes

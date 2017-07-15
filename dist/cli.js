@@ -10,7 +10,6 @@ var path = require('path');
 var ora = require('ora');
 
 var _require = require('./helpers'),
-    getFileNames = _require.getFileNames,
     moveUsingFormatsConfig = _require.moveUsingFormatsConfig,
     moveSpecificFileTypes = _require.moveSpecificFileTypes;
 
@@ -21,7 +20,7 @@ var spinner = ora('Scanning').start();
 var sourceDir = argv.source ? path.resolve(process.cwd(), argv.source) : process.cwd();
 var outputDir = argv.output ? path.resolve(process.cwd(), argv.output) : sourceDir;
 
-var names = getFileNames(sourceDir);
+var names = fs.readdirSync(sourceDir);
 var moved = [];
 
 if (argv.t && argv.f) {

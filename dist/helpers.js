@@ -24,10 +24,6 @@ var getFileExtension = function getFileExtension(fileName) {
   return i < 0 ? '' : fileName.substr(i + 1);
 };
 
-var getFileNames = function getFileNames(directory) {
-  return fs.readdirSync(directory);
-};
-
 var organize = function organize(spinner, source, output, fileName, type) {
   mkdir(output);
 
@@ -167,7 +163,6 @@ var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, spFolder, 
 module.exports = {
   mkdir: mkdir,
   getFileExtension: getFileExtension,
-  getFileNames: getFileNames,
   organize: organize,
   moveUsingFormatsConfig: moveUsingFormatsConfig,
   moveSpecificFileTypes: moveSpecificFileTypes

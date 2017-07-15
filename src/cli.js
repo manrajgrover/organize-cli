@@ -9,7 +9,6 @@ const path = require('path');
 const ora = require('ora');
 
 const {
-  getFileNames,
   moveUsingFormatsConfig,
   moveSpecificFileTypes
 } = require('./helpers');
@@ -41,7 +40,7 @@ const sourceDir = argv.source ? path.resolve(
 let outputDir = argv.output ? path.resolve(
   process.cwd(), argv.output) : sourceDir;
 
-let names = getFileNames(sourceDir);
+let names = fs.readdirSync(sourceDir);
 let moved = [];
 
 if (argv.t && argv.f) {
