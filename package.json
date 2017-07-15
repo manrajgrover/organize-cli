@@ -4,7 +4,9 @@
   "description": "Organize your files and folders in just seconds",
   "scripts": {
     "lint": "eslint ./src/cli.js ./src/formats.js ./src/helpers.js",
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "report": "nyc mocha --recursive",
+    "all": "npm run test && npm run lint"
   },
   "bin": {
     "organize": "./dist/cli.js"
