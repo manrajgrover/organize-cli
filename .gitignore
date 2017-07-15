@@ -1,3 +1,4 @@
 /node_modules
-/Testing
+/testing
 npm-debug.log
+.nyc_output
