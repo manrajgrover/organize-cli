@@ -28,15 +28,11 @@ const argv = yargs
   .alias('f', 'folder')
     .describe('f', 'Specific folder to move specific files to')
     .string('f')
+  .demandOption(['s'], 'Please provide a source folder to organize')
   .example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"')
   .help('h')
   .alias('h', 'help')
   .argv;
-
-if (!argv.source) {
-  console.log(chalk.cyan('Please provide a source, do a `organize -h` for help'));
-  process.exit(-1);
-}
 
 let spinner = ora('Scanning').start();
 
