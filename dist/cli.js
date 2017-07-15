@@ -14,12 +14,7 @@ var _require = require('./helpers'),
     moveUsingFormatsConfig = _require.moveUsingFormatsConfig,
     moveSpecificFileTypes = _require.moveSpecificFileTypes;
 
-var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - comma separated string of file extensions').string('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"').help('h').alias('h', 'help').argv;
-
-if (!argv.source) {
-  console.log(chalk.cyan('Please provide a source, do a `organize -h` for help'));
-  process.exit(-1);
-}
+var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - comma separated string of file extensions').string('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').demand(['s']).example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"').help('h').alias('h', 'help').argv;
 
 var spinner = ora('Scanning').start();
 

@@ -132,7 +132,6 @@ var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, spFolder, 
   });
 
   var moved = [];
-  console.log(moved);
 
   var _iteratorNormalCompletion3 = true;
   var _didIteratorError3 = false;
@@ -170,5 +169,6 @@ module.exports = {
   getFileExtension: getFileExtension,
   getFileNames: getFileNames,
   organize: organize,
-  moveUsingFormatsConfig: moveUsingFormatsConfig
+  moveUsingFormatsConfig: moveUsingFormatsConfig,
+  moveSpecificFileTypes: moveSpecificFileTypes
 };

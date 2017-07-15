@@ -88,7 +88,6 @@ const moveSpecificFileTypes = (spFormats, spFolder, fileNames, sourceDir, output
   });
 
   const moved = [];
-  console.log(moved);
 
   for (let name of names) {
     spinner.info(`Moving file ${name} to ${spFolder}`);
@@ -105,5 +104,6 @@ module.exports = {
   getFileExtension,
   getFileNames,
   organize,
-  moveUsingFormatsConfig
+  moveUsingFormatsConfig,
+  moveSpecificFileTypes
 };

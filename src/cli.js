@@ -28,7 +28,7 @@ const argv = yargs
   .alias('f', 'folder')
     .describe('f', 'Specific folder to move specific files to')
     .string('f')
-  .demandOption(['s'], 'Please provide a source folder to organize')
+  .demand(['s'])
   .example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"')
   .help('h')
   .alias('h', 'help')
