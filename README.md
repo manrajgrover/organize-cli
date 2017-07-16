@@ -3,6 +3,8 @@
 
 > Organize files based on file types, formally known as `organizeit`
 
+[![Demo](https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif)](https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif)
+
 ## Installation
 
 ```
@@ -24,48 +26,6 @@ Options:
 
 Examples:
   organize -s ~/Downloads -o . -t mp3 wav -f "Songs"
-```
-
-## Example
-
-### Before:
-
-```
-Downloads
-│   ├── Project.docx
-│   ├── Resume.pdf
-│   ├── Seven Lions - Worlds Apart.mp3
-│   ├── Daft Punk - Get Lucky.mp3
-│   ├── Report.pdf
-│   ├── Profile Picture.png
-│   ├── Some Random Library.zip
-│   ├── Cats.jpg
-│   ├── Install me.exe
-```
-
-### After `organize -s ~/Downloads`:
-
-```
-Downloads
-│   ├── Music
-│   │   └── Daft Punk - Get Lucky.mp3
-│   │   ├── Seven Lions - Worlds Apart.mp3
-|	|
-│   ├── Documents
-│   │   └── Project.docx
-│   │   └── Report.pdf
-│   │   ├── Resume.pdf
-|	|
-│   ├── Compressed
-│   │   └── Some Random Library.zip
-│   │   └── archive.7z
-|	|
-│   ├── System Files
-│   │   └── Install me.exe
-|	|
-│   ├── Images
-│   │   └── Profile Picture.png
-│   │   └── Cats.jpg
 ```
 
 ## Related
