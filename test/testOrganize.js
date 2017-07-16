@@ -98,4 +98,13 @@ describe('Organize Files', () => {
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.3gp')));
   });
+
+  it('should organize files by dates', () => {
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
+
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-07', 'test.log')));
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-09', 'test')));
+    assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-10', 'test.apib')));
+  });
 });
