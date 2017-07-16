@@ -42,7 +42,8 @@ describe('Organize Files', () => {
     for (let folderType of Object.keys(formats)) {
       for (let fileType of formats[folderType]) {
         fileType = fileType.toLowerCase();
-        fs.writeFileSync(path.join(SOURCE_FOLDER, `test.${fileType}`), '');
+        const FILE_NAME = `test.${fileType}`;
+        fs.writeFileSync(path.join(SOURCE_FOLDER, FILE_NAME), '');
       }
     }
 
@@ -100,7 +101,7 @@ describe('Organize Files', () => {
   });
 
   it('should organize files by dates', () => {
-    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
+    let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-07', 'test.log')));
