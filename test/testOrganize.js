@@ -44,7 +44,6 @@ describe('Organize Files', () => {
         fileType = fileType.toLowerCase();
         const FILE_NAME = `test.${fileType}`;
         fs.writeFileSync(path.join(SOURCE_FOLDER, FILE_NAME), '');
-        console.log(FILE_NAME, fs.statSync(path.join(SOURCE_FOLDER, FILE_NAME)));
       }
     }
 
@@ -59,11 +58,6 @@ describe('Organize Files', () => {
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.apib'), '1499699912', '1499699912');
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.ai'), '1499299912', '1499299912');
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.log'), '1499399912', '1499399912');
-
-    console.log('test', fs.statSync(path.join(SOURCE_FOLDER, 'test')));
-    console.log('test.apib', fs.statSync(path.join(SOURCE_FOLDER, 'test.apib')));
-    console.log('test.ai', fs.statSync(path.join(SOURCE_FOLDER, 'test.ai')));
-    console.log('test.log', fs.statSync(path.join(SOURCE_FOLDER, 'test.log')));
 
     if (!commandExistsSync('organize')) {
       throw new Error('Command "organize" command not found');
@@ -108,16 +102,6 @@ describe('Organize Files', () => {
 
   it('should organize files by dates', () => {
     let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
-
-    console.log(output);
-    output = syncExec('ls ./testing');
-    console.log(output);
-
-    output = syncExec('ls ./testing/source');
-    console.log(output);
-
-    output = syncExec('ls ./testing/output');
-    console.log(output);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-07', 'test.log')));
