@@ -42,7 +42,9 @@ describe('Organize Files', () => {
     for (let folderType of Object.keys(formats)) {
       for (let fileType of formats[folderType]) {
         fileType = fileType.toLowerCase();
-        fs.writeFileSync(path.join(SOURCE_FOLDER, `test.${fileType}`), '');
+        const FILE_NAME = `test.${fileType}`;
+        fs.writeFileSync(path.join(SOURCE_FOLDER, FILE_NAME), '');
+        console.log(FILE_NAME, fs.statSync(path.join(SOURCE_FOLDER, FILE_NAME)));
       }
     }
 
@@ -57,6 +59,11 @@ describe('Organize Files', () => {
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.apib'), '1499699912', '1499699912');
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.ai'), '1499299912', '1499299912');
     fs.utimesSync(path.join(SOURCE_FOLDER, 'test.log'), '1499399912', '1499399912');
+
+    console.log('test', fs.statSync(path.join(SOURCE_FOLDER, 'test')));
+    console.log('test.apib', fs.statSync(path.join(SOURCE_FOLDER, 'test.apib')));
+    console.log('test.ai', fs.statSync(path.join(SOURCE_FOLDER, 'test.ai')));
+    console.log('test.log', fs.statSync(path.join(SOURCE_FOLDER, 'test.log')));
 
     if (!commandExistsSync('organize')) {
       throw new Error('Command "organize" command not found');
