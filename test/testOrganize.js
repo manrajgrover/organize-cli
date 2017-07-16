@@ -100,7 +100,14 @@ describe('Organize Files', () => {
   });
 
   it('should organize files by dates', () => {
-    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
+    let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
+
+    console.log(output);
+    output = syncExec('ls');
+    console.log(output);
+
+    output = syncExec('ls 2017-07-06');
+    console.log(output);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-07', 'test.log')));
