@@ -16,6 +16,7 @@ Usage: organize [options]
 
 Options:
   -o, --output  Output directory - Creates one if doesn't exist         [string]
+  -d, --date    Organize files by dates                                [boolean]
   -s, --source  Source directory to organize                 [string] [required]
   -t, --type    Specific types to organize - strings of file extensions  [array]
   -f, --folder  Specific folder to move specific files to               [string]
