@@ -22,13 +22,13 @@ const argv = yargs
     .describe('s', 'Source directory to organize')
     .string('s')
   .alias('t', 'type')
-    .describe('t', 'Specific types to organize - comma separated string of file extensions')
-    .string('t')
+    .describe('t', 'Specific types to organize - strings of file extensions')
+    .array('t')
   .alias('f', 'folder')
     .describe('f', 'Specific folder to move specific files to')
     .string('f')
   .demand(['s'])
-  .example('$0 -s ~/Downloads -o . -t "mp3, wav" -f "Songs"')
+  .example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"')
   .help('h')
   .alias('h', 'help')
   .argv;
@@ -37,14 +37,14 @@ let spinner = ora('Scanning').start();
 
 const sourceDir = argv.source ? path.resolve(
   process.cwd(), argv.source) : process.cwd();
-let outputDir = argv.output ? path.resolve(
+const outputDir = argv.output ? path.resolve(
   process.cwd(), argv.output) : sourceDir;
 
 let names = fs.readdirSync(sourceDir);
 let moved = [];
 
 if (argv.t && argv.f) {
-  const spFormats = argv.t.split(',').map(ext => ext.trim());
+  const spFormats = argv.t;
   const spFolder = argv.f;
 
   moved = moveSpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
