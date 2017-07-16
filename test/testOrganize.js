@@ -103,10 +103,13 @@ describe('Organize Files', () => {
     let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
 
     console.log(output);
-    output = syncExec('ls');
+    output = syncExec('ls ./testing');
     console.log(output);
 
-    output = syncExec('ls 2017-07-06');
+    output = syncExec('ls ./testing/source');
+    console.log(output);
+
+    output = syncExec('ls ./testing/output');
     console.log(output);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
