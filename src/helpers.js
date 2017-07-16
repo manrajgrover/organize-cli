@@ -103,7 +103,7 @@ const organizeByDates = (files, sourceDir, outputDir, spinner) => {
 
   for (let file of files) {
     let date = fs.statSync(path.join(sourceDir, file));
-    date = dateformat(new Date(date.birthtime), 'yyyy-mm-dd');
+    date = dateformat(new Date(date.mtime), 'yyyy-mm-dd');
 
     spinner.info(`Moving file ${file} to ${date} folder`);
 

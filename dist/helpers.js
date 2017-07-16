@@ -173,7 +173,7 @@ var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spin
       var file = _step4.value;
 
       var date = fs.statSync(path.join(sourceDir, file));
-      date = dateformat(new Date(date.birthtime), 'yyyy-mm-dd');
+      date = dateformat(new Date(date.mtime), 'yyyy-mm-dd');
 
       spinner.info('Moving file ' + file + ' to ' + date + ' folder');
 
