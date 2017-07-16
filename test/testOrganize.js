@@ -93,7 +93,7 @@ describe('Organize Files', () => {
   });
 
   it('should organize files with specific file type', () => {
-    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t 'ai, 3gp' -f 'misc'`);
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f 'misc'`);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.3gp')));
