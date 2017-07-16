@@ -10,7 +10,8 @@ const ora = require('ora');
 
 const {
   organizeByDefaults,
-  organizeBySpecificFileTypes
+  organizeBySpecificFileTypes,
+  organizeByDates
 } = require('./helpers');
 
 const argv = yargs
@@ -18,6 +19,9 @@ const argv = yargs
   .alias('o', 'output')
     .describe('o', "Output directory - Creates one if doesn't exist")
     .string('o')
+  .alias('d', 'date')
+    .describe('d', 'Organize files by dates')
+    .boolean('d')
   .alias('s', 'source')
     .describe('s', 'Source directory to organize')
     .string('s')
@@ -43,7 +47,9 @@ const outputDir = argv.output ? path.resolve(
 let names = fs.readdirSync(sourceDir);
 let moved = [];
 
-if (argv.t && argv.f) {
+if (argv.d) {
+  moved = organizeByDates(names, sourceDir, outputDir, spinner);
+} else if (argv.t && argv.f) {
   const spFormats = argv.t;
   const spFolder = argv.f;
 

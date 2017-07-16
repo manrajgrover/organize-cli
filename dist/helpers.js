@@ -3,6 +3,7 @@
 var mv = require('mv');
 var fs = require('fs');
 var path = require('path');
+var dateformat = require('dateformat');
 var formats = require('./formats');
 
 var isValidFile = function isValidFile(name, dir) {
@@ -160,10 +161,48 @@ var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats
   return moved;
 };
 
+var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spinner) {
+  var moved = [];
+
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
+
+  try {
+    for (var _iterator4 = files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var file = _step4.value;
+
+      var date = fs.statSync(path.join(sourceDir, file));
+      date = dateformat(new Date(date.birthtime), 'yyyy-mm-dd');
+
+      spinner.info('Moving file ' + file + ' to ' + date + ' folder');
+
+      var pOrganize = organize(spinner, sourceDir, outputDir, file, date);
+      moved.push(pOrganize);
+    }
+  } catch (err) {
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion4 && _iterator4.return) {
+        _iterator4.return();
+      }
+    } finally {
+      if (_didIteratorError4) {
+        throw _iteratorError4;
+      }
+    }
+  }
+
+  return moved;
+};
+
 module.exports = {
   mkdir: mkdir,
   getFileExtension: getFileExtension,
   organize: organize,
   organizeByDefaults: organizeByDefaults,
-  organizeBySpecificFileTypes: organizeBySpecificFileTypes
+  organizeBySpecificFileTypes: organizeBySpecificFileTypes,
+  organizeByDates: organizeByDates
 };

@@ -3,6 +3,7 @@
 const mv = require('mv');
 const fs = require('fs');
 const path = require('path');
+const dateformat = require('dateformat');
 const formats = require('./formats');
 
 const isValidFile = (name, dir) => name.indexOf('.') !== 0 && !fs.statSync(path.join(dir, name)).isDirectory();
@@ -97,10 +98,27 @@ const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outp
   return moved;
 };
 
+const organizeByDates = (files, sourceDir, outputDir, spinner) => {
+  const moved = [];
+
+  for (let file of files) {
+    let date = fs.statSync(path.join(sourceDir, file));
+    date = dateformat(new Date(date.birthtime), 'yyyy-mm-dd');
+
+    spinner.info(`Moving file ${file} to ${date} folder`);
+
+    const pOrganize = organize(spinner, sourceDir, outputDir, file, date);
+    moved.push(pOrganize);
+  }
+
+  return moved;
+};
+
 module.exports = {
   mkdir,
   getFileExtension,
   organize,
   organizeByDefaults,
-  organizeBySpecificFileTypes
+  organizeBySpecificFileTypes,
+  organizeByDates
 };
