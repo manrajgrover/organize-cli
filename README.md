@@ -3,7 +3,7 @@
 
 > Organize files based on file types, formally known as `organizeit`
 
-[![Demo](https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif)](https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif)
+<img src="https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif" height="500"/>
 
 ## Installation
 
