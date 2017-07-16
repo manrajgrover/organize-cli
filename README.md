@@ -17,13 +17,12 @@ Usage: organize [options]
 Options:
   -o, --output  Output directory - Creates one if doesn't exist         [string]
   -s, --source  Source directory to organize                 [string] [required]
-  -t, --type    Specific types to organize - comma separated string of file
-                extensions                                              [string]
+  -t, --type    Specific types to organize - strings of file extensions  [array]
   -f, --folder  Specific folder to move specific files to               [string]
   -h, --help    Show help                                              [boolean]
 
 Examples:
-  organize -s ~/Downloads -o . -t "mp3, wav" -f "Songs"
+  organize -s ~/Downloads -o . -t mp3 wav -f "Songs"
 ```
 
 ## Example
