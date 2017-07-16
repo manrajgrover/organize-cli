@@ -10,8 +10,8 @@ var path = require('path');
 var ora = require('ora');
 
 var _require = require('./helpers'),
-    moveUsingFormatsConfig = _require.moveUsingFormatsConfig,
-    moveSpecificFileTypes = _require.moveSpecificFileTypes;
+    organizeByDefaults = _require.organizeByDefaults,
+    organizeBySpecificFileTypes = _require.organizeBySpecificFileTypes;
 
 var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - strings of file extensions').array('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').demand(['s']).example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"').help('h').alias('h', 'help').argv;
 
@@ -27,9 +27,9 @@ if (argv.t && argv.f) {
   var spFormats = argv.t;
   var spFolder = argv.f;
 
-  moved = moveSpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
+  moved = organizeBySpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
 } else {
-  moved = moveUsingFormatsConfig(names, sourceDir, outputDir, spinner);
+  moved = organizeByDefaults(names, sourceDir, outputDir, spinner);
 }
 
 Promise.all(moved.map(function (p) {

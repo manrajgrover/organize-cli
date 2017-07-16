@@ -45,7 +45,7 @@ var organize = function organize(spinner, source, output, fileName, type) {
   });
 };
 
-var moveUsingFormatsConfig = function moveUsingFormatsConfig(names, sourceDir, outputDir, spinner) {
+var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir, spinner) {
   var moved = [];
 
   var _iteratorNormalCompletion = true;
@@ -117,8 +117,8 @@ var moveUsingFormatsConfig = function moveUsingFormatsConfig(names, sourceDir, o
   return moved;
 };
 
-var moveSpecificFileTypes = function moveSpecificFileTypes(spFormats, spFolder, fileNames, sourceDir, outputDir, spinner) {
-  var names = fileNames.filter(function (name) {
+var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats, spFolder, files, sourceDir, outputDir, spinner) {
+  var names = files.filter(function (name) {
     if (!isValidFile(name, sourceDir)) {
       return false;
     }
@@ -164,6 +164,6 @@ module.exports = {
   mkdir: mkdir,
   getFileExtension: getFileExtension,
   organize: organize,
-  moveUsingFormatsConfig: moveUsingFormatsConfig,
-  moveSpecificFileTypes: moveSpecificFileTypes
+  organizeByDefaults: organizeByDefaults,
+  organizeBySpecificFileTypes: organizeBySpecificFileTypes
 };

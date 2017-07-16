@@ -43,7 +43,7 @@ const organize = (spinner, source, output, fileName, type) => {
   });
 };
 
-const moveUsingFormatsConfig = (names, sourceDir, outputDir, spinner) => {
+const organizeByDefaults = (names, sourceDir, outputDir, spinner) => {
   const moved = [];
 
   for (let name of names) {
@@ -75,8 +75,8 @@ const moveUsingFormatsConfig = (names, sourceDir, outputDir, spinner) => {
   return moved;
 };
 
-const moveSpecificFileTypes = (spFormats, spFolder, fileNames, sourceDir, outputDir, spinner) => {
-  const names = fileNames.filter((name) => {
+const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outputDir, spinner) => {
+  const names = files.filter((name) => {
     if (!isValidFile(name, sourceDir)) {
       return false;
     }
@@ -101,6 +101,6 @@ module.exports = {
   mkdir,
   getFileExtension,
   organize,
-  moveUsingFormatsConfig,
-  moveSpecificFileTypes
+  organizeByDefaults,
+  organizeBySpecificFileTypes
 };

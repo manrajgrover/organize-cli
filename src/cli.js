@@ -9,8 +9,8 @@ const path = require('path');
 const ora = require('ora');
 
 const {
-  moveUsingFormatsConfig,
-  moveSpecificFileTypes
+  organizeByDefaults,
+  organizeBySpecificFileTypes
 } = require('./helpers');
 
 const argv = yargs
@@ -47,9 +47,9 @@ if (argv.t && argv.f) {
   const spFormats = argv.t;
   const spFolder = argv.f;
 
-  moved = moveSpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
+  moved = organizeBySpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
 } else {
-  moved = moveUsingFormatsConfig(names, sourceDir, outputDir, spinner);
+  moved = organizeByDefaults(names, sourceDir, outputDir, spinner);
 }
 
 Promise.all(moved.map(p => p.catch(e => e)))
