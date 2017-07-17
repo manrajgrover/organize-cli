@@ -94,24 +94,7 @@ describe('Organize Files', () => {
   });
 
   it('should organize files with specific file type', () => {
-    let output = syncExec(`ls ${SOURCE_FOLDER}`);
-    console.log(output);
-
-    output = syncExec(`ls ${OUTPUT_FOLDER}`);
-    console.log(output);
-
-    output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f misc`);
-    console.log(output);
-
-    let miscFolder = path.join(OUTPUT_FOLDER, 'misc');
-    output = syncExec(`ls ${miscFolder}`);
-    console.log(output);
-
-    output = syncExec(`ls ${OUTPUT_FOLDER}`);
-    console.log(output);
-
-    output = syncExec(`ls ${SOURCE_FOLDER}`);
-    console.log(output);
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f misc`);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.3gp')));
