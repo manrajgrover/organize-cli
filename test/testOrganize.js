@@ -97,7 +97,11 @@ describe('Organize Files', () => {
     let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f 'misc'`);
     console.log(output);
 
-    output = syncExec(`ls ${OUTPUT_FOLDER}`);
+    let miscFolder = path.join(OUTPUT_FOLDER, 'misc');
+    output = syncExec(`ls ${miscFolder}`);
+    console.log(output);
+
+    output = syncExec(`ls ${SOURCE_FOLDER}`);
     console.log(output);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
