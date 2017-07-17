@@ -1,5 +1,6 @@
 # organize-cli
-[![Build Status](https://travis-ci.org/ManrajGrover/organize-cli.svg?branch=master)](https://travis-ci.org/ManrajGrover/organize-cli) [![npm](https://img.shields.io/npm/v/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) [![npm](https://img.shields.io/npm/dt/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
+[![Build Status](https://travis-ci.org/ManrajGrover/organize-cli.svg?branch=master)](https://travis-ci.org/ManrajGrover/organize-cli) [![Build status](https://ci.appveyor.com/api/projects/status/ynou4s6geylqsmo1?svg=true)](https://ci.appveyor.com/project/ManrajGrover/organize-cli)
+ [![npm](https://img.shields.io/npm/v/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) [![npm](https://img.shields.io/npm/dt/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
 > Organize files based on file types, formally known as `organizeit`
 
