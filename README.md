@@ -29,6 +29,10 @@ Examples:
   organize -s ~/Downloads -o . -t mp3 wav -f "Songs"
 ```
 
+## Like it?
+
+:star2: this repo to show support. You can also tweet about this project by clicking [here](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2FManrajGrover%2Forganize-cli&via=manrajsgrover&text=Checkout%20this%20command%20line%20tool%20for%20organizing%20your%20files%20in%20a%20better%20way%20on%20%23Github&hashtags=cli%2C%20node).
+
 ## Related
 
 * [classifier](https://github.com/bhrigu123/classifier)
