@@ -94,7 +94,13 @@ describe('Organize Files', () => {
   });
 
   it('should organize files with specific file type', () => {
-    let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f 'misc'`);
+    let output = syncExec(`ls ${SOURCE_FOLDER}`);
+    console.log(output);
+
+    output = syncExec(`ls ${OUTPUT_FOLDER}`);
+    console.log(output);
+
+    output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f 'misc'`);
     console.log(output);
 
     let miscFolder = path.join(OUTPUT_FOLDER, 'misc');
