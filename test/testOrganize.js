@@ -94,14 +94,14 @@ describe('Organize Files', () => {
   });
 
   it('should organize files with specific file type', () => {
-    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f 'misc'`);
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -t ai 3gp -f misc`);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, 'misc', 'test.3gp')));
   });
 
   it('should organize files by dates', () => {
-    let output = syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
+    syncExec(`organize -s ${SOURCE_FOLDER} -o ${OUTPUT_FOLDER} -d`);
 
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-06', 'test.ai')));
     assert(fs.existsSync(path.join(OUTPUT_FOLDER, '2017-07-07', 'test.log')));
