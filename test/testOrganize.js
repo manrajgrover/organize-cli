@@ -101,6 +101,9 @@ describe('Organize Files', () => {
     output = syncExec(`ls ${miscFolder}`);
     console.log(output);
 
+    output = syncExec(`ls ${OUTPUT_FOLDER}`);
+    console.log(output);
+
     output = syncExec(`ls ${SOURCE_FOLDER}`);
     console.log(output);
 
