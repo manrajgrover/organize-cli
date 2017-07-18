@@ -23,28 +23,32 @@ const getFileExtension = (fileName) => {
   return (i < 0) ? '' : fileName.substr(i + 1);
 };
 
-const organize = (spinner, source, output, fileName, type) => {
+const organize = (spinner, source, output, fileName, type, listOnly) => {
   mkdir(output);
 
   const typeDir = path.resolve(output, type);
   mkdir(typeDir);
 
   return new Promise((resolve, reject) => {
-    mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
-      if (err) {
-        const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
-        spinner.warn(errorMessage);
-        reject(new Error(errorMessage));
-      } else {
-        const successMessage = `Moved ${fileName} to ${type} folder`;
-        spinner.info(successMessage);
-        resolve(successMessage);
-      }
-    });
+    if (listOnly) {
+      console.log('mv '+ path.resolve(source, fileName) + ' ' + path.resolve(typeDir, fileName));
+    } else {
+      mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
+        if (err) {
+          const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
+          spinner.warn(errorMessage);
+          reject(new Error(errorMessage));
+        } else {
+          const successMessage = `Moved ${fileName} to ${type} folder`;
+          spinner.info(successMessage);
+          resolve(successMessage);
+        }
+      });
+    }
   });
 };
 
-const organizeByDefaults = (names, sourceDir, outputDir, spinner) => {
+const organizeByDefaults = (names, sourceDir, outputDir, spinner, listOnly) => {
   const moved = [];
 
   for (let name of names) {
@@ -56,7 +60,7 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner) => {
         if (formats[type].indexOf(extension) >= 0) {
           spinner.info(`Moving file ${name} to ${type}`);
 
-          const pOrganize = organize(spinner, sourceDir, outputDir, name, type);
+          const pOrganize = organize(spinner, sourceDir, outputDir, name, type, listOnly);
 
           moved.push(pOrganize);
           isMoved = true;
@@ -67,7 +71,7 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner) => {
       if (!isMoved) {
         spinner.info(`Moving file ${name} to Miscellaneous`);
         moved.push(
-          organize(spinner, sourceDir, outputDir, name, 'Miscellaneous')
+          organize(spinner, sourceDir, outputDir, name, 'Miscellaneous', listOnly)
         );
       }
     }
@@ -76,7 +80,7 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner) => {
   return moved;
 };
 
-const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outputDir, spinner) => {
+const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
   const names = files.filter((name) => {
     if (!isValidFile(name, sourceDir)) {
       return false;
@@ -91,14 +95,14 @@ const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outp
   for (let name of names) {
     spinner.info(`Moving file ${name} to ${spFolder}`);
 
-    const pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder);
+    const pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder, listOnly);
     moved.push(pOrganize);
   }
 
   return moved;
 };
 
-const organizeByDates = (files, sourceDir, outputDir, spinner) => {
+const organizeByDates = (files, sourceDir, outputDir, spinner, listOnly) => {
   const moved = [];
 
   for (let file of files) {
@@ -107,7 +111,7 @@ const organizeByDates = (files, sourceDir, outputDir, spinner) => {
 
     spinner.info(`Moving file ${file} to ${date} folder`);
 
-    const pOrganize = organize(spinner, sourceDir, outputDir, file, date);
+    const pOrganize = organize(spinner, sourceDir, outputDir, file, date, listOnly);
     moved.push(pOrganize);
   }
 
