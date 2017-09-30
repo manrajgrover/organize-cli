@@ -31,6 +31,9 @@ const argv = yargs
   .alias('f', 'folder')
     .describe('f', 'Specific folder to move specific files to')
     .string('f')
+  .alias('l', 'list')
+    .describe('l', 'List the mv commands that will be executed without actually executing them')
+    .boolean('l')
   .demand(['s'])
   .example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"')
   .help('h')
@@ -47,15 +50,19 @@ const outputDir = argv.output ? path.resolve(
 let names = fs.readdirSync(sourceDir);
 let moved = [];
 
+let listOnly = argv.l;
+
 if (argv.d) {
-  moved = organizeByDates(names, sourceDir, outputDir, spinner);
+  moved = organizeByDates(names, sourceDir, outputDir, spinner, listOnly);
 } else if (argv.t && argv.f) {
   const spFormats = argv.t;
   const spFolder = argv.f;
 
-  moved = organizeBySpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
+  moved = organizeBySpecificFileTypes(
+    spFormats, spFolder, names, sourceDir, outputDir, spinner, listOnly
+  );
 } else {
-  moved = organizeByDefaults(names, sourceDir, outputDir, spinner);
+  moved = organizeByDefaults(names, sourceDir, outputDir, spinner, listOnly);
 }
 
 Promise.all(moved.map(p => p.catch(e => e)))
@@ -69,7 +76,7 @@ Promise.all(moved.map(p => p.catch(e => e)))
       }
     }
 
-    if (!isError) {
+    if (!listOnly && !isError) {
       spinner.succeed('Moved all files!');
     }
   })

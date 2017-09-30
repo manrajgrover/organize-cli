@@ -14,7 +14,7 @@ var _require = require('./helpers'),
     organizeBySpecificFileTypes = _require.organizeBySpecificFileTypes,
     organizeByDates = _require.organizeByDates;
 
-var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('d', 'date').describe('d', 'Organize files by dates').boolean('d').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - strings of file extensions').array('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').demand(['s']).example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"').help('h').alias('h', 'help').argv;
+var argv = yargs.usage('Usage: $0 [options]').alias('o', 'output').describe('o', "Output directory - Creates one if doesn't exist").string('o').alias('d', 'date').describe('d', 'Organize files by dates').boolean('d').alias('s', 'source').describe('s', 'Source directory to organize').string('s').alias('t', 'type').describe('t', 'Specific types to organize - strings of file extensions').array('t').alias('f', 'folder').describe('f', 'Specific folder to move specific files to').string('f').alias('l', 'list').describe('l', 'List the mv commands that will be executed without actually executing them').boolean('l').demand(['s']).example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"').help('h').alias('h', 'help').argv;
 
 var spinner = ora('Scanning').start();
 
@@ -24,15 +24,17 @@ var outputDir = argv.output ? path.resolve(process.cwd(), argv.output) : sourceD
 var names = fs.readdirSync(sourceDir);
 var moved = [];
 
+var listOnly = argv.l;
+
 if (argv.d) {
-  moved = organizeByDates(names, sourceDir, outputDir, spinner);
+  moved = organizeByDates(names, sourceDir, outputDir, spinner, listOnly);
 } else if (argv.t && argv.f) {
   var spFormats = argv.t;
   var spFolder = argv.f;
 
-  moved = organizeBySpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner);
+  moved = organizeBySpecificFileTypes(spFormats, spFolder, names, sourceDir, outputDir, spinner, listOnly);
 } else {
-  moved = organizeByDefaults(names, sourceDir, outputDir, spinner);
+  moved = organizeByDefaults(names, sourceDir, outputDir, spinner, listOnly);
 }
 
 Promise.all(moved.map(function (p) {
@@ -70,7 +72,7 @@ Promise.all(moved.map(function (p) {
     }
   }
 
-  if (!isError) {
+  if (!listOnly && !isError) {
     spinner.succeed('Moved all files!');
   }
 }).catch(function (err) {
