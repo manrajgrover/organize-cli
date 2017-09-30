@@ -25,28 +25,36 @@ var getFileExtension = function getFileExtension(fileName) {
   return i < 0 ? '' : fileName.substr(i + 1);
 };
 
-var organize = function organize(spinner, source, output, fileName, type) {
-  mkdir(output);
-
+var organize = function organize(spinner, source, output, fileName, type, listOnly) {
   var typeDir = path.resolve(output, type);
-  mkdir(typeDir);
+
+  if (!listOnly) {
+    mkdir(output);
+    mkdir(typeDir);
+  }
 
   return new Promise(function (resolve, reject) {
-    mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), function (err) {
-      if (err) {
-        var errorMessage = 'Couldn\'t move ' + fileName + ' because of following error: ' + err;
-        spinner.warn(errorMessage);
-        reject(new Error(errorMessage));
-      } else {
-        var successMessage = 'Moved ' + fileName + ' to ' + type + ' folder';
-        spinner.info(successMessage);
-        resolve(successMessage);
-      }
-    });
+    if (listOnly) {
+      var listMessage = 'mv ' + path.resolve(source, fileName) + ' ' + path.resolve(typeDir, fileName);
+      spinner.info(listMessage);
+      resolve(listMessage);
+    } else {
+      mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), function (err) {
+        if (err) {
+          var errorMessage = 'Couldn\'t move ' + fileName + ' because of following error: ' + err;
+          spinner.warn(errorMessage);
+          reject(new Error(errorMessage));
+        } else {
+          var successMessage = 'Moved ' + fileName + ' to ' + type + ' folder';
+          spinner.info(successMessage);
+          resolve(successMessage);
+        }
+      });
+    }
   });
 };
 
-var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir, spinner) {
+var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir, spinner, listOnly) {
   var moved = [];
 
   var _iteratorNormalCompletion = true;
@@ -72,7 +80,7 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
             if (formats[type].indexOf(extension) >= 0) {
               spinner.info('Moving file ' + name + ' to ' + type);
 
-              var pOrganize = organize(spinner, sourceDir, outputDir, name, type);
+              var pOrganize = organize(spinner, sourceDir, outputDir, name, type, listOnly);
 
               moved.push(pOrganize);
               isMoved = true;
@@ -96,7 +104,7 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
 
         if (!isMoved) {
           spinner.info('Moving file ' + name + ' to Miscellaneous');
-          moved.push(organize(spinner, sourceDir, outputDir, name, 'Miscellaneous'));
+          moved.push(organize(spinner, sourceDir, outputDir, name, 'Miscellaneous', listOnly));
         }
       }
     }
@@ -118,7 +126,7 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
   return moved;
 };
 
-var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats, spFolder, files, sourceDir, outputDir, spinner) {
+var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) {
   var names = files.filter(function (name) {
     if (!isValidFile(name, sourceDir)) {
       return false;
@@ -140,7 +148,7 @@ var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats
 
       spinner.info('Moving file ' + name + ' to ' + spFolder);
 
-      var pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder);
+      var pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder, listOnly);
       moved.push(pOrganize);
     }
   } catch (err) {
@@ -161,7 +169,7 @@ var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats
   return moved;
 };
 
-var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spinner) {
+var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spinner, listOnly) {
   var moved = [];
 
   var _iteratorNormalCompletion4 = true;
@@ -177,7 +185,7 @@ var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spin
 
       spinner.info('Moving file ' + file + ' to ' + date + ' folder');
 
-      var pOrganize = organize(spinner, sourceDir, outputDir, file, date);
+      var pOrganize = organize(spinner, sourceDir, outputDir, file, date, listOnly);
       moved.push(pOrganize);
     }
   } catch (err) {
