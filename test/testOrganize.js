@@ -25,7 +25,7 @@ const removeDirsFromFolder = (dirName) => {
     for (let i = 0; i < files.length; i += 1) {
       let filePath = path.join(dirName, files[i]);
       if (fs.statSync(filePath).isDirectory()) {
-        fse.remove(filePath);
+        fse.removeSync(filePath);
       }
     }
   }
@@ -89,6 +89,17 @@ describe('Organize Files', () => {
       for (let fileType of formats[folderType]) {
         fileType = fileType.toLowerCase();
         assert(fs.existsSync(path.join(OUTPUT_FOLDER, folderType, `test.${fileType}`)));
+      }
+    }
+  });
+
+  it('should only list moving commands and not actually move the files', () => {
+    syncExec(`organize -s ${SOURCE_FOLDER} -l`);
+
+    for (let folderType of Object.keys(formats)) {
+      for (let fileType of formats[folderType]) {
+        fileType = fileType.toLowerCase();
+        assert(!fs.existsSync(path.join(OUTPUT_FOLDER, folderType, `test.${fileType}`)));
       }
     }
   });
