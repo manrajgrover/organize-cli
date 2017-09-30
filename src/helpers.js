@@ -24,14 +24,18 @@ const getFileExtension = (fileName) => {
 };
 
 const organize = (spinner, source, output, fileName, type, listOnly) => {
-  mkdir(output);
-
   const typeDir = path.resolve(output, type);
-  mkdir(typeDir);
+
+  if (!listOnly) {
+    mkdir(output);
+    mkdir(typeDir);
+  }
 
   return new Promise((resolve, reject) => {
     if (listOnly) {
-      console.log('mv '+ path.resolve(source, fileName) + ' ' + path.resolve(typeDir, fileName));
+      const listMessage = `mv ${path.resolve(source, fileName)} ${path.resolve(typeDir, fileName)}`;
+      spinner.info(listMessage);
+      resolve(listMessage);
     } else {
       mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
         if (err) {
@@ -80,7 +84,8 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner, listOnly) => {
   return moved;
 };
 
-const organizeBySpecificFileTypes = (spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
+const organizeBySpecificFileTypes = (
+    spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
   const names = files.filter((name) => {
     if (!isValidFile(name, sourceDir)) {
       return false;
