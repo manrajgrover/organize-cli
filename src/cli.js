@@ -8,12 +8,19 @@ const fs = require('fs');
 const path = require('path');
 const ora = require('ora');
 
+/**
+ * Get helper functions from `helpers`
+ */
 const {
   organizeByDefaults,
   organizeBySpecificFileTypes,
   organizeByDates
 } = require('./helpers');
 
+
+/**
+ * Pass all arguments passed using `yargs`
+ */
 const argv = yargs
   .usage('Usage: $0 [options]')
   .alias('o', 'output')
@@ -40,10 +47,21 @@ const argv = yargs
   .alias('h', 'help')
   .argv;
 
+/**
+ * Spinner initialization
+ */
 let spinner = ora('Scanning').start();
 
+/**
+ * Get source directory, if provided in arguments
+ * Defaults to current working directory
+ */
 const sourceDir = argv.source ? path.resolve(
   process.cwd(), argv.source) : process.cwd();
+/**
+ * Get output directory, if provided in arguments
+ * Defaults to source directory
+ */
 const outputDir = argv.output ? path.resolve(
   process.cwd(), argv.output) : sourceDir;
 
@@ -52,9 +70,11 @@ let moved = [];
 
 let listOnly = argv.l;
 
+// If date flag is passed, organize by dates
 if (argv.d) {
   moved = organizeByDates(names, sourceDir, outputDir, spinner, listOnly);
 } else if (argv.t && argv.f) {
+  // Organize specific file formats and move to specific folder
   const spFormats = argv.t;
   const spFolder = argv.f;
 
@@ -62,9 +82,14 @@ if (argv.d) {
     spFormats, spFolder, names, sourceDir, outputDir, spinner, listOnly
   );
 } else {
+  // Defaults to normal behavior
   moved = organizeByDefaults(names, sourceDir, outputDir, spinner, listOnly);
 }
 
+/**
+ * Resolves all promises and catches any error
+ * while moving a file
+ */
 Promise.all(moved.map(p => p.catch(e => e)))
   .then((messages) => {
     let isError = false;
