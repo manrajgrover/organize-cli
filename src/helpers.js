@@ -70,6 +70,7 @@ const organize = (spinner, source, output, fileName, type, listOnly) => {
       spinner.info(listMessage);
       resolve(listMessage);
     } else {
+      // Move the file
       mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), (err) => {
         if (err) {
           const errorMessage = `Couldn't move ${fileName} because of following error: ${err}`;
