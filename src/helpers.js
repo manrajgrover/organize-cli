@@ -8,8 +8,9 @@ const formats = require('./formats');
 
 /**
  * Check if file is valid
- * @param {str} name Name of file
- * @param {str} dir  File directory
+ *
+ * @param {string} name Name of file
+ * @param {string} dir  File directory
  */
 const isValidFile = (name, dir) =>
     (name.indexOf('.') !== 0 &&
@@ -17,7 +18,8 @@ const isValidFile = (name, dir) =>
 
 /**
  * Create a directory if it does not exist
- * @param {str} folderPath Path of folder to be created
+ *
+ * @param {string} folderPath Path of folder to be created
  */
 const mkdir = (folderPath) => {
   try {
@@ -31,22 +33,38 @@ const mkdir = (folderPath) => {
 
 /**
  * Get extension of a file
- * @param {str} fileName File name
+ *
+ * @param {string} fileName File name
  */
 const getFileExtension = (fileName) => {
   const i = fileName.lastIndexOf('.');
   return (i < 0) ? '' : fileName.substr(i + 1);
 };
 
+/**
+ * Returns a promise for movement of file to specific directory;
+ * Also creates the output directory if not existing
+ *
+ * @param {Object}  spinner  Ora spinner instance
+ * @param {string}  source   Source directory name
+ * @param {string}  output   Output directory name
+ * @param {string}  fileName File name
+ * @param {string}  type     File type
+ * @param {boolean} listOnly Only list the commands which will be executed for movement
+ */
 const organize = (spinner, source, output, fileName, type, listOnly) => {
   const typeDir = path.resolve(output, type);
 
+  // Create the directory only if listOnly is not set
   if (!listOnly) {
     mkdir(output);
     mkdir(typeDir);
   }
 
+  // Return promise for moving a specific file to specific directory
   return new Promise((resolve, reject) => {
+    // If listOnly is set, output the command that will be executed without
+    // moving the file
     if (listOnly) {
       const listMessage = `mv ${path.resolve(source, fileName)} ${path.resolve(typeDir, fileName)}`;
       spinner.info(listMessage);
@@ -67,30 +85,50 @@ const organize = (spinner, source, output, fileName, type, listOnly) => {
   });
 };
 
-const organizeByDefaults = (names, sourceDir, outputDir, spinner, listOnly) => {
+/**
+ * Organizes files using pre-configured formats and file extensions
+ *
+ * @param {Array}   files     File names
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {Object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
+ */
+const organizeByDefaults = (files, sourceDir, outputDir, spinner, listOnly) => {
   const moved = [];
 
-  for (let name of names) {
-    if (isValidFile(name, sourceDir)) {
-      const extension = getFileExtension(name).toUpperCase();
+  for (let file of files) {
+    // Check if file is valid
+    if (isValidFile(file, sourceDir)) {
+      // Get file extension
+      const extension = getFileExtension(file).toUpperCase();
       let isMoved = false;
 
+      // Iterating over format types
       for (let type of Object.keys(formats)) {
         if (formats[type].indexOf(extension) >= 0) {
-          spinner.info(`Moving file ${name} to ${type}`);
+          // Output to spinner that this file will be moved
+          spinner.info(`Moving file ${file} to ${type}`);
 
-          const pOrganize = organize(spinner, sourceDir, outputDir, name, type, listOnly);
+          // Move the file to format directory
+          const pOrganize = organize(spinner, sourceDir, outputDir, file, type, listOnly);
 
+          // Push the promise to array
           moved.push(pOrganize);
           isMoved = true;
           break;
         }
       }
 
+      // If file extension does not exist in config,
+      // move the file to Miscellaneous folder
       if (!isMoved) {
-        spinner.info(`Moving file ${name} to Miscellaneous`);
+        // Output to spinner that this file will be moved
+        spinner.info(`Moving file ${file} to Miscellaneous`);
+
+        // Push the promise to array
         moved.push(
-          organize(spinner, sourceDir, outputDir, name, 'Miscellaneous', listOnly)
+          organize(spinner, sourceDir, outputDir, file, 'Miscellaneous', listOnly)
         );
       }
     }
@@ -99,9 +137,20 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner, listOnly) => {
   return moved;
 };
 
-
+/**
+ * Organize specific file types
+ *
+ * @param {Array}   spFormats Organize only specific formats
+ * @param {string}  spFolder  Move specific files to this folder name
+ * @param {Array}   files     File names
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {Object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
+ */
 const organizeBySpecificFileTypes = (
     spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
+  // Filter file names on specific formats
   const names = files.filter((name) => {
     if (!isValidFile(name, sourceDir)) {
       return false;
@@ -114,9 +163,13 @@ const organizeBySpecificFileTypes = (
   const moved = [];
 
   for (let name of names) {
+    // Output to spinner that this file will be moved
     spinner.info(`Moving file ${name} to ${spFolder}`);
 
+    // Move the file to output directory
     const pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder, listOnly);
+
+    // Push the promise to array
     moved.push(pOrganize);
   }
 
@@ -125,11 +178,12 @@ const organizeBySpecificFileTypes = (
 
 /**
  * Organizes the files by creation date
- * @param {Array} files Files to be organized
- * @param {string} sourceDir Source directory name
- * @param {string} outputDir Output directory name
- * @param {object} spinner Ora spinner instance
- * @param {bool} listOnly Only list the commands which will be executed for movement
+ *
+ * @param {Array}   files     Files to be organized
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
  */
 const organizeByDates = (files, sourceDir, outputDir, spinner, listOnly) => {
   const moved = [];

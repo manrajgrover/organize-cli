@@ -93,6 +93,8 @@ if (argv.d) {
 Promise.all(moved.map(p => p.catch(e => e)))
   .then((messages) => {
     let isError = false;
+
+    // Check if any promise failed
     for (let message of messages) {
       if (message instanceof Error) {
         spinner.fail("Couldn't move all files!");
