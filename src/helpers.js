@@ -6,8 +6,19 @@ const path = require('path');
 const dateformat = require('dateformat');
 const formats = require('./formats');
 
-const isValidFile = (name, dir) => name.indexOf('.') !== 0 && !fs.statSync(path.join(dir, name)).isDirectory();
+/**
+ * Check if file is valid
+ * @param {str} name Name of file
+ * @param {str} dir  File directory
+ */
+const isValidFile = (name, dir) =>
+    (name.indexOf('.') !== 0 &&
+     !fs.statSync(path.join(dir, name)).isDirectory());
 
+/**
+ * Create a directory if it does not exist
+ * @param {str} folderPath Path of folder to be created
+ */
 const mkdir = (folderPath) => {
   try {
     fs.mkdirSync(folderPath);
@@ -18,6 +29,10 @@ const mkdir = (folderPath) => {
   }
 };
 
+/**
+ * Get extension of a file
+ * @param {str} fileName File name
+ */
 const getFileExtension = (fileName) => {
   const i = fileName.lastIndexOf('.');
   return (i < 0) ? '' : fileName.substr(i + 1);
@@ -84,6 +99,7 @@ const organizeByDefaults = (names, sourceDir, outputDir, spinner, listOnly) => {
   return moved;
 };
 
+
 const organizeBySpecificFileTypes = (
     spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
   const names = files.filter((name) => {
@@ -107,16 +123,29 @@ const organizeBySpecificFileTypes = (
   return moved;
 };
 
+/**
+ * Organizes the files by creation date
+ * @param {Array} files Files to be organized
+ * @param {string} sourceDir Source directory name
+ * @param {string} outputDir Output directory name
+ * @param {object} spinner Ora spinner instance
+ * @param {bool} listOnly Only list the commands which will be executed for movement
+ */
 const organizeByDates = (files, sourceDir, outputDir, spinner, listOnly) => {
   const moved = [];
 
   for (let file of files) {
+    // Get date when the file was created
     let date = fs.statSync(path.join(sourceDir, file));
     date = dateformat(new Date(date.mtime), 'yyyy-mm-dd');
 
+    // Output to spinner that this file will be moved
     spinner.info(`Moving file ${file} to ${date} folder`);
 
+    // Move the file to output directory
     const pOrganize = organize(spinner, sourceDir, outputDir, file, date, listOnly);
+
+    // Push the promise to array
     moved.push(pOrganize);
   }
 
