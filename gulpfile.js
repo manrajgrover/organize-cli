@@ -4,7 +4,7 @@ const babel = require('gulp-babel');
 gulp.task('es6', () => {
   gulp.src('src/*.js')
     .pipe(babel({
-      presets: ['es2015'],
+      presets: ['env'],
     }))
     .pipe(gulp.dest('./dist'));
 });
