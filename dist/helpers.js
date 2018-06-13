@@ -6,10 +6,21 @@ var path = require('path');
 var dateformat = require('dateformat');
 var formats = require('./formats');
 
+/**
+ * Check if file is valid
+ *
+ * @param {string} name Name of file
+ * @param {string} dir  File directory
+ */
 var isValidFile = function isValidFile(name, dir) {
   return name.indexOf('.') !== 0 && !fs.statSync(path.join(dir, name)).isDirectory();
 };
 
+/**
+ * Create a directory if it does not exist
+ *
+ * @param {string} folderPath Path of folder to be created
+ */
 var mkdir = function mkdir(folderPath) {
   try {
     fs.mkdirSync(folderPath);
@@ -20,25 +31,46 @@ var mkdir = function mkdir(folderPath) {
   }
 };
 
+/**
+ * Get extension of a file
+ *
+ * @param {string} fileName File name
+ */
 var getFileExtension = function getFileExtension(fileName) {
   var i = fileName.lastIndexOf('.');
   return i < 0 ? '' : fileName.substr(i + 1);
 };
 
+/**
+ * Returns a promise for movement of file to specific directory;
+ * Also creates the output directory if not existing
+ *
+ * @param {Object}  spinner  Ora spinner instance
+ * @param {string}  source   Source directory name
+ * @param {string}  output   Output directory name
+ * @param {string}  fileName File name
+ * @param {string}  type     File type
+ * @param {boolean} listOnly Only list the commands which will be executed for movement
+ */
 var organize = function organize(spinner, source, output, fileName, type, listOnly) {
   var typeDir = path.resolve(output, type);
 
+  // Create the directory only if listOnly is not set
   if (!listOnly) {
     mkdir(output);
     mkdir(typeDir);
   }
 
+  // Return promise for moving a specific file to specific directory
   return new Promise(function (resolve, reject) {
+    // If listOnly is set, output the command that will be executed without
+    // moving the file
     if (listOnly) {
       var listMessage = 'mv ' + path.resolve(source, fileName) + ' ' + path.resolve(typeDir, fileName);
       spinner.info(listMessage);
       resolve(listMessage);
     } else {
+      // Move the file
       mv(path.resolve(source, fileName), path.resolve(typeDir, fileName), function (err) {
         if (err) {
           var errorMessage = 'Couldn\'t move ' + fileName + ' because of following error: ' + err;
@@ -54,7 +86,16 @@ var organize = function organize(spinner, source, output, fileName, type, listOn
   });
 };
 
-var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir, spinner, listOnly) {
+/**
+ * Organizes files using pre-configured formats and file extensions
+ *
+ * @param {Array}   files     File names
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {Object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
+ */
+var organizeByDefaults = function organizeByDefaults(files, sourceDir, outputDir, spinner, listOnly) {
   var moved = [];
 
   var _iteratorNormalCompletion = true;
@@ -62,13 +103,16 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = names[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var name = _step.value;
+    for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var file = _step.value;
 
-      if (isValidFile(name, sourceDir)) {
-        var extension = getFileExtension(name).toUpperCase();
+      // Check if file is valid
+      if (isValidFile(file, sourceDir)) {
+        // Get file extension
+        var extension = getFileExtension(file).toUpperCase();
         var isMoved = false;
 
+        // Iterating over format types
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -78,15 +122,21 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
             var type = _step2.value;
 
             if (formats[type].indexOf(extension) >= 0) {
-              spinner.info('Moving file ' + name + ' to ' + type);
+              // Output to spinner that this file will be moved
+              spinner.info('Moving file ' + file + ' to ' + type);
 
-              var pOrganize = organize(spinner, sourceDir, outputDir, name, type, listOnly);
+              // Move the file to format directory
+              var pOrganize = organize(spinner, sourceDir, outputDir, file, type, listOnly);
 
+              // Push the promise to array
               moved.push(pOrganize);
               isMoved = true;
               break;
             }
           }
+
+          // If file extension does not exist in config,
+          // move the file to Miscellaneous folder
         } catch (err) {
           _didIteratorError2 = true;
           _iteratorError2 = err;
@@ -103,8 +153,11 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
         }
 
         if (!isMoved) {
-          spinner.info('Moving file ' + name + ' to Miscellaneous');
-          moved.push(organize(spinner, sourceDir, outputDir, name, 'Miscellaneous', listOnly));
+          // Output to spinner that this file will be moved
+          spinner.info('Moving file ' + file + ' to Miscellaneous');
+
+          // Push the promise to array
+          moved.push(organize(spinner, sourceDir, outputDir, file, 'Miscellaneous', listOnly));
         }
       }
     }
@@ -126,7 +179,19 @@ var organizeByDefaults = function organizeByDefaults(names, sourceDir, outputDir
   return moved;
 };
 
+/**
+ * Organize specific file types
+ *
+ * @param {Array}   spFormats Organize only specific formats
+ * @param {string}  spFolder  Move specific files to this folder name
+ * @param {Array}   files     File names
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {Object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
+ */
 var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) {
+  // Filter file names on specific formats
   var names = files.filter(function (name) {
     if (!isValidFile(name, sourceDir)) {
       return false;
@@ -146,9 +211,13 @@ var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats
     for (var _iterator3 = names[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
       var name = _step3.value;
 
+      // Output to spinner that this file will be moved
       spinner.info('Moving file ' + name + ' to ' + spFolder);
 
+      // Move the file to output directory
       var pOrganize = organize(spinner, sourceDir, outputDir, name, spFolder, listOnly);
+
+      // Push the promise to array
       moved.push(pOrganize);
     }
   } catch (err) {
@@ -169,6 +238,15 @@ var organizeBySpecificFileTypes = function organizeBySpecificFileTypes(spFormats
   return moved;
 };
 
+/**
+ * Organizes the files by creation date
+ *
+ * @param {Array}   files     Files to be organized
+ * @param {string}  sourceDir Source directory name
+ * @param {string}  outputDir Output directory name
+ * @param {object}  spinner   Ora spinner instance
+ * @param {boolean} listOnly  Only list the commands which will be executed for movement
+ */
 var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spinner, listOnly) {
   var moved = [];
 
@@ -180,12 +258,17 @@ var organizeByDates = function organizeByDates(files, sourceDir, outputDir, spin
     for (var _iterator4 = files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
       var file = _step4.value;
 
+      // Get date when the file was created
       var date = fs.statSync(path.join(sourceDir, file));
       date = dateformat(new Date(date.mtime), 'yyyy-mm-dd');
 
+      // Output to spinner that this file will be moved
       spinner.info('Moving file ' + file + ' to ' + date + ' folder');
 
+      // Move the file to output directory
       var pOrganize = organize(spinner, sourceDir, outputDir, file, date, listOnly);
+
+      // Push the promise to array
       moved.push(pOrganize);
     }
   } catch (err) {
