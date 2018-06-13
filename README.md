@@ -29,6 +29,24 @@ Examples:
   organize -s ~/Downloads -o . -t mp3 wav -f "Songs"
 ```
 
+## Development
+
+Run:
+
+```sh
+$ git clone https://github.com/ManrajGrover/organize-cli.git
+$ cd organize-cli
+$ npm link
+```
+
+This will setup a symbolic link to the CLI. Any changes in source files will now be reflected when running the `organize` command.
+
+To lint your code, run
+
+```sh
+$ npm run lint
+```
+
 ## Like it?
 
 :star2: this repo to show support. You can also tweet about this project by clicking [here](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2FManrajGrover%2Forganize-cli&via=manrajsgrover&text=Checkout%20this%20command%20line%20tool%20for%20organizing%20your%20files%20in%20a%20better%20way%20on%20%23Github&hashtags=cli%2C%20node).
