@@ -1,10 +1,10 @@
 # organize-cli
-[![Build Status](https://travis-ci.org/ManrajGrover/organize-cli.svg?branch=master)](https://travis-ci.org/ManrajGrover/organize-cli) [![Build status](https://ci.appveyor.com/api/projects/status/ynou4s6geylqsmo1?svg=true)](https://ci.appveyor.com/project/ManrajGrover/organize-cli)
+[![Build Status](https://travis-ci.org/manrajgrover/organize-cli.svg?branch=master)](https://travis-ci.org/manrajgrover/organize-cli) [![Build status](https://ci.appveyor.com/api/projects/status/ynou4s6geylqsmo1?svg=true)](https://ci.appveyor.com/project/manrajgrover/organize-cli)
  [![npm](https://img.shields.io/npm/v/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) [![npm](https://img.shields.io/npm/dt/organize-cli.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/organize-cli) ![awesome](https://img.shields.io/badge/awesome-yes-green.svg)
 
 > Organize files based on file types, formally known as `organizeit`
 
-<img src="https://github.com/ManrajGrover/organize-cli/blob/master/assets/demo.gif" height="500"/>
+<img src="https://github.com/manrajgrover/organize-cli/blob/master/assets/demo.gif" height="500"/>
 
 ## Installation
 
@@ -34,7 +34,7 @@ Examples:
 Run:
 
 ```sh
-$ git clone https://github.com/ManrajGrover/organize-cli.git
+$ git clone https://github.com/manrajgrover/organize-cli.git
 $ cd organize-cli
 $ npm link
 ```
@@ -49,11 +49,11 @@ $ npm run lint
 
 ## Like it?
 
-:star2: this repo to show support. You can also tweet about this project by clicking [here](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2FManrajGrover%2Forganize-cli&via=manrajsgrover&text=Checkout%20this%20command%20line%20tool%20for%20organizing%20your%20files%20in%20a%20better%20way%20on%20%23Github&hashtags=cli%2C%20node).
+:star2: this repo to show support. You can also tweet about this project by clicking [here](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fmanrajgrover%2Forganize-cli&via=manrajsgrover&text=Checkout%20this%20command%20line%20tool%20for%20organizing%20your%20files%20in%20a%20better%20way%20on%20%23Github&hashtags=cli%2C%20node).
 
 ## Related
 
 * [classifier](https://github.com/bhrigu123/classifier)
 
 ## License
-[MIT](https://github.com/ManrajGrover/organize-cli/blob/master/License.md) © Manraj Singh
+[MIT](https://github.com/manrajgrover/organize-cli/blob/master/License.md) © Manraj Singh
