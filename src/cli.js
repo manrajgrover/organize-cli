@@ -20,26 +20,27 @@ const {
 /**
  * Pass all arguments passed using `yargs`
  */
+// eslint-disable-next-line prefer-destructuring
 const argv = yargs
   .usage('Usage: $0 [options]')
   .alias('o', 'output')
-    .describe('o', "Output directory - Creates one if doesn't exist")
-    .string('o')
+  .describe('o', "Output directory - Creates one if doesn't exist")
+  .string('o')
   .alias('d', 'date')
-    .describe('d', 'Organize files by dates')
-    .boolean('d')
+  .describe('d', 'Organize files by dates')
+  .boolean('d')
   .alias('s', 'source')
-    .describe('s', 'Source directory to organize')
-    .string('s')
+  .describe('s', 'Source directory to organize')
+  .string('s')
   .alias('t', 'type')
-    .describe('t', 'Specific types to organize - strings of file extensions')
-    .array('t')
+  .describe('t', 'Specific types to organize - strings of file extensions')
+  .array('t')
   .alias('f', 'folder')
-    .describe('f', 'Specific folder to move specific files to')
-    .string('f')
+  .describe('f', 'Specific folder to move specific files to')
+  .string('f')
   .alias('l', 'list')
-    .describe('l', 'List the mv commands that will be executed without actually executing them')
-    .boolean('l')
+  .describe('l', 'List the mv commands that will be executed without actually executing them')
+  .boolean('l')
   .demand(['s'])
   .example('$0 -s ~/Downloads -o . -t mp3 wav -f "Songs"')
   .help('h')
@@ -56,13 +57,15 @@ let spinner = ora('Scanning').start();
  * Defaults to current working directory
  */
 const sourceDir = argv.source ? path.resolve(
-  process.cwd(), argv.source) : process.cwd();
+  process.cwd(), argv.source
+) : process.cwd();
 /**
  * Get output directory, if provided in arguments
  * Defaults to source directory
  */
 const outputDir = argv.output ? path.resolve(
-  process.cwd(), argv.output) : sourceDir;
+  process.cwd(), argv.output
+) : sourceDir;
 
 let names = fs.readdirSync(sourceDir);
 let moved = [];
