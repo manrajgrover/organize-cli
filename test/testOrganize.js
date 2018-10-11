@@ -3,10 +3,11 @@ const assert = require('assert');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
-const { mkdir } = require('../src/helpers');
-const formats = require('../src/formats');
 const syncExec = require('sync-exec');
 const commandExistsSync = require('command-exists').sync;
+
+const { mkdir } = require('../src/helpers');
+const formats = require('../src/formats');
 
 const TESTING_FOLDER = path.join(__dirname, '..', 'testing');
 
@@ -65,7 +66,7 @@ describe('Organize Files', () => {
   });
 
   it('should throw error for missing args', () => {
-    const stderr = syncExec('organize').stderr;
+    const { stderr } = syncExec('organize');
 
     assert.notEqual(stderr, '');
     assert(stderr.includes('Missing required argument: s'));

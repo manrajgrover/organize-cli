@@ -12,9 +12,8 @@ const formats = require('./formats');
  * @param {string} name Name of file
  * @param {string} dir  File directory
  */
-const isValidFile = (name, dir) =>
-    (name.indexOf('.') !== 0 &&
-     !fs.statSync(path.join(dir, name)).isDirectory());
+const isValidFile = (name, dir) => (name.indexOf('.') !== 0
+     && !fs.statSync(path.join(dir, name)).isDirectory());
 
 /**
  * Create a directory if it does not exist
@@ -150,7 +149,8 @@ const organizeByDefaults = (files, sourceDir, outputDir, spinner, listOnly) => {
  * @param {boolean} listOnly  Only list the commands which will be executed for movement
  */
 const organizeBySpecificFileTypes = (
-    spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly) => {
+  spFormats, spFolder, files, sourceDir, outputDir, spinner, listOnly
+) => {
   // Filter file names on specific formats
   const names = files.filter((name) => {
     if (!isValidFile(name, sourceDir)) {
