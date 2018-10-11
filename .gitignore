@@ -1,5 +1,9 @@
 /node_modules
 /testing
-npm-debug.log
+
+
 .nyc_output
 package-lock.json
+
+npm-debug.log
+yarn-error.log
