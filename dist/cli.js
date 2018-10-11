@@ -4,7 +4,6 @@
 'use strict';
 
 var yargs = require('yargs');
-var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
 var ora = require('ora');
